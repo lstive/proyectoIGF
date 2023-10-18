@@ -2,18 +2,21 @@
 
 <!-- styles stack -->
 @push('styles')
-
+<link href="/styles/globals.css" rel="stylesheet"/>
+<link href="/styles/login/styles.css" rel="stylesheet"/>
 @endpush
 <!-- styles stack end -->
 
 <!-- content -->
 @section('content')
-<form method="get" action="/auth">
-  @csrf
-  <input name="email" type="text" value="1@gmail.com"/>
-  <input name="password" type="text" value="1"/>
-  <input name="" type="submit" value=""/>
-</form>
+<div class="login-container">
+  <form method="get" action="/auth">
+    @csrf
+    <input name="email" type="text" value="" placeholder="Email"/><br/>
+    <input name="password" type="text" value="" placeholder="Contraseña"/><br/>
+    <input name="" type="submit" value="Iniciar sesión"/>
+  </form>
+</div>
 @endsection
 <!-- content end -->
 

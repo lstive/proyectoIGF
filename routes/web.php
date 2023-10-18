@@ -14,20 +14,24 @@ use Illuminate\Support\Facades\Route;
  */
 use App\Http\Controllers\UserController;
 
-// login user
-Route::get('/login', [UserController::class, 'index']);
+/* login */
+Route::get('/login', [UserController::class, 'index'])->name('login');
 Route::get('/auth', [UserController::class, 'login']);
 
-// admin views
-Route::middleware('auth.admin')->group(function () {
-    Route::get('/admin', function () {
-       return view('admin.index') ;
-    });
+
+/* admins views */
+Route::middleware('auth.admin')->prefix('admins')->group(function () {
+    Route::get('/', function () {
+        return view('admins.index');
+    })->name('index');
 });
 
-// operator views
-Route::middleware('auth.operator')->group(function () {
-    Route::get('/operator', function () {
-        return view('operator.index');
-    });
+/* operators views */
+Route::middleware('auth.operator')->prefix('operators')->name('operators.')->group(function () {
+    Route::get('/', function () {
+        return view('operators.index');
+    })->name('index');
 });
+
+/* logout */
+Route::middleware('auth')->get('/logout', [UserController::class, 'logout']);

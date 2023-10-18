@@ -2,16 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 class UserController extends Controller
 {
     public function index() {
         if(auth()->check()) {
             if(auth()->user()->rol == 'admin') {
-                return redirect('/admin');
+                return redirect('admins.index');
             }else if(auth()->user()->rol == 'operator') {
-                return redirect('/operator');
+                return redirect(route('operators.index'));
             }
         }
         
@@ -26,12 +24,17 @@ class UserController extends Controller
 
         if(auth()->attempt($credentials)) {
             if(auth()->user()->rol == 'admin') {
-                return redirect('/admin');
+                return redirect('admins.index');
             }else if(auth()->user()->rol == 'operator') {
-                return redirect('/operator');
+                return redirect(route('operators.index'));
             }
         }
 
         return redirect('login');
+    }
+
+    public function logout() {
+        auth()->logout();
+        return redirect(route('login'));
     }
 }

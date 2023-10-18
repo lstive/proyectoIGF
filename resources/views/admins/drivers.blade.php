@@ -31,15 +31,15 @@
   
   <div class="left-container">
     @component('components.userMenu')
-    <div class="active-menu"><a href="{{route('admins.index')}}">Inicio</a></div>
+    <div><a href="{{route('admins.index')}}">Inicio</a></div>
     <div><a href="{{route('admins.operators')}}">Operadores</a></div>
-    <div><a href="{{route('admins.drivers')}}">Taxistas</a></div>
+    <div class="active-menu"><a href="{{route('admins.drivers')}}">Taxistas</a></div>
     <div><a href="{{route('user.logout')}}">Cerrar sesión</a></div>
     @endcomponent
   </div>
   
   <div class="right-container">
-    <h1>Hola. Bienvenido {{auth()->user()->name}}</h1>
+    <button class="open-shadow-container">open</button>
   </div>
 </div>
 @endsection

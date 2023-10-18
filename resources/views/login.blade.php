@@ -2,7 +2,6 @@
 
 <!-- styles stack -->
 @push('styles')
-<link href="/styles/globals.css" rel="stylesheet"/>
 <link href="/styles/login/styles.css" rel="stylesheet"/>
 @endpush
 <!-- styles stack end -->
@@ -17,6 +16,7 @@
     <input name="" type="submit" value="Iniciar sesión"/>
   </form>
 </div>
+
 @endsection
 <!-- content end -->
 

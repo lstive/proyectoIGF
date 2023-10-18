@@ -20,10 +20,18 @@ Route::get('/auth', [UserController::class, 'login']);
 
 
 /* admins views */
-Route::middleware('auth.admin')->prefix('admins')->group(function () {
+Route::middleware('auth.admin')->prefix('admins')->name('admins.')->group(function () {
     Route::get('/', function () {
         return view('admins.index');
     })->name('index');
+
+    Route::get('/operators', function () {
+        return view('admins.operators');
+    })->name('operators');
+
+    Route::get('/drivers', function () {
+        return view('admins.drivers');
+    })->name('drivers');
 });
 
 /* operators views */
@@ -34,4 +42,4 @@ Route::middleware('auth.operator')->prefix('operators')->name('operators.')->gro
 });
 
 /* logout */
-Route::middleware('auth')->get('/logout', [UserController::class, 'logout']);
+Route::middleware('auth')->get('/logout', [UserController::class, 'logout'])->name('user.logout');

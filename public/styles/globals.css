@@ -1,6 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 /* global css styles */
 body, h1, h2, h3, h4, p, form {
     padding: 0px;
     margin: 0px;
     border: 0px;
+    font-family: 'Roboto', sans-serif;
+}
+
+h1, h2, h3 {
+    color: #6b6a6a;
 }

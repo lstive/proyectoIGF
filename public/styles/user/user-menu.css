@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+.user-menu {
+    background-color: #ffffff;
+    width: 200px;
+    height: 100%;
+    box-shadow: 2px 2px 2px #e0e0e0;
+    box-sizing: border-box;
+    padding: 20px;
+    font-size: 16px;
+    font-family: roboto;
+}
+
+.user-menu a {
+    text-decoration: none;
+    color: #969696;
+}
+
+.user-menu a:hover {
+    color: #416675;
+}
+
+.user-menu div {
+    border-bottom: 1px solid #ffffff;
+    margin-bottom: 20px;
+}
+
+.active-menu {
+    box-sizing: border-box;
+    border-bottom: 1px solid silver !important;
+}

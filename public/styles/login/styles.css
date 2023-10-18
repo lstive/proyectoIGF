@@ -1,5 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
 body {
     background-color: #f0f0f0;
+    font-family: 'Roboto', sans-serif;
 }
 
 .login-container {
@@ -10,15 +13,18 @@ body {
 }
 
 .login-container form {
+    font-size: 17px;
     width: 400px;
     background-color: #ffffff;
     box-sizing: border-box;
     padding: 60px;
     border-radius: 6px;
     box-shadow: 2px 2px 2px #e0e0e0;
+    font-family: 'Roboto', sans-serif;
 }
 
 .login-container input[type="text"] {
+    font-family: 'Roboto', sans-serif;
     width: 100%;
     height: 40px;
     border: 1px solid #e0e0e0;
@@ -28,6 +34,7 @@ body {
 }
 
 .login-container input[type="submit"] {
+    font-family: 'Roboto', sans-serif;
     width: 100px;
     height: 40px;
     background-color: #416675;
@@ -48,5 +55,3 @@ body {
     border: 1px solid #bfbfbf;
     outline: 0px;
 }
-
-

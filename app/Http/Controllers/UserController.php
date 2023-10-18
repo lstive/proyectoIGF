@@ -7,7 +7,7 @@ class UserController extends Controller
     public function index() {
         if(auth()->check()) {
             if(auth()->user()->rol == 'admin') {
-                return redirect('admins.index');
+                return redirect(route('admins.index'));
             }else if(auth()->user()->rol == 'operator') {
                 return redirect(route('operators.index'));
             }
@@ -24,7 +24,7 @@ class UserController extends Controller
 
         if(auth()->attempt($credentials)) {
             if(auth()->user()->rol == 'admin') {
-                return redirect('admins.index');
+                return redirect(route('admins.index'));
             }else if(auth()->user()->rol == 'operator') {
                 return redirect(route('operators.index'));
             }

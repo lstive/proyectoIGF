@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\User;
+use App\Models\Taxista;
 
 class UserController extends Controller
 {
@@ -42,5 +43,10 @@ class UserController extends Controller
     public function operators() {
         $operators = User::all()->where('rol', 'operator');
         return view('admins.operators')->with('operators', $operators);
+    }
+
+    public function drivers() {
+        $drivers = Taxista::all();
+        return view('admins.drivers')->with('drivers', $drivers);
     }
 }

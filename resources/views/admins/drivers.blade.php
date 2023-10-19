@@ -13,12 +13,16 @@
   <div class="shadow-container">
     
     <div class="form-container">
-      <form method="get" action="/auth">
+      <form method="post" action="/api/addDriver">
         @csrf
-        <button class="close-shadow-container">close</button>
+        <button class="close-shadow-container button">Cerrar</button>
+        <hr/>
+        <input name="id" type="text" value="" placeholder="id" hidden/><br/>
+        <input name="name" type="text" value="" placeholder="Nombre"/><br/>
         <input name="email" type="text" value="" placeholder="Email"/><br/>
-        <input name="password" type="text" value="" placeholder="Contraseña"/><br/>
-        <input name="password" type="text" value="" placeholder="Contraseña"/><br/>
+        <input name="phone" type="text" value="" placeholder="Telefono"/><br/>
+        <input name="license" type="text" value="" placeholder="Licensia"/><br/>
+        <input name="direction" type="text" value="" placeholder="Dirección"/><br/>
         <input name="password" type="text" value="" placeholder="Contraseña"/><br/>
         <div>
           <input name="" type="submit" value="Agregar"/>
@@ -39,7 +43,41 @@
   </div>
   
   <div class="right-container">
-    <button class="open-shadow-container">open</button>
+    <div class="sub-container" style="top: 0px; position: sticky;">
+      <button class="open-shadow-container button">Agregar nuevo</button>
+    </div>
+
+    <div class="sub-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Nombre</th>
+            <th>Email</th>
+            <th>Telefono</th>
+            <th>Licensia</th>
+            <th>Dirección</th>
+            <th>Contraseña</th>
+            <th colspan="2">Controles</th>
+          </tr>
+        </thead>
+        <tbody>
+          @foreach($drivers as $driver)
+          <tr>
+            <td>{{$driver->id}}</td>
+            <td>{{$driver->name}}</td>
+            <td>{{$driver->email}}</td>
+            <td>{{$driver->phone}}</td>
+            <td>{{$driver->license}}</td>
+            <td>{{$driver->direction}}</td>
+            <td>-</td>
+            <td><button id="btn-delete-driver" value-id="{{$driver->id}}" value-rol="{{$driver->rol}}" class="button">Borrar</button></td>
+            <td><button id="btn-modify-driver" class="open-shadow-container button" value-id="{{$driver->id}}" value-name="{{$driver->name}}" value-email="{{$driver->email}}" value-phone="{{$driver->phone}}" value-direction="{{$driver->direction}}" value-license="{{$driver->license}}" value-password="{{$driver->password}}" class="button">Modificar</button></td>
+          </tr>
+          @endforeach
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
 @endsection

@@ -21,3 +21,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::delete('/deleteOperator/{id}', [AdminController::class, 'destroyOperator']);
 Route::post('/addOperator', [AdminController::class, 'addOperator']);
+
+// con {id} es el name en backend
+Route::delete('/deleteDriver/{id}', [AdminController::class, 'destroyDriver']);
+Route::post('/addDriver', [AdminController::class, 'addDriver']);

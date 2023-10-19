@@ -40,7 +40,7 @@
   
   <div class="right-container">
     <div class="sub-container">
-      <h1>Hola. Bienvenido {{auth()->user()->name}}</h1>
+      <h1>Bienvenido {{auth()->user()->name}}</h1>
     </div>
   </div>
 </div>

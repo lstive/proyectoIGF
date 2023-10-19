@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Taxista;
 
 class AdminController extends Controller
 {
@@ -74,5 +75,37 @@ class AdminController extends Controller
         }
         
         return redirect(route('admins.operators'));
+    }
+
+    public function destroyDriver(string $id) {
+        Taxista::destroy($id);
+        return $id;
+    }
+
+    public function addDriver() {
+        if(!request()->get('id')) {
+            $user = new Taxista;
+            $user->name = request()->get('name');
+            $user->email = request()->get('email');
+            $user->phone = request()->get('phone');
+            $user->license = request()->get('license');
+            $user->direction = request()->get('direction');
+            $user->password = bcrypt(request()->get('password'));
+            $user->save();
+        }else {
+            $user = Taxista::find(request()->get('id'));
+            $user->name = request()->get('name');
+            $user->email = request()->get('email');
+            $user->phone = request()->get('phone');
+            $user->license = request()->get('license');
+            $user->direction = request()->get('direction');
+            if(request()->get('password') != '') {
+                $user->password = bcrypt(request()->get('password'));
+            }
+            
+            $user->save();
+        }
+        
+        return redirect(route('admins.drivers'));
     }
 }

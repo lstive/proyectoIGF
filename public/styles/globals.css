@@ -10,3 +10,22 @@ body, h1, h2, h3, h4, p, form {
 h1, h2, h3 {
     color: #6b6a6a;
 }
+
+.button {
+    height: 40px;
+    background-color: #416675;
+    border-radius: 6px;
+    border: none;
+    color: #ffffff;
+    width: auto;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.button:hover {
+    background-color: #669bb0;
+}
+
+.button:focus {
+    background-color: #669bb0;
+}

@@ -25,9 +25,7 @@ Route::middleware('auth.admin')->prefix('admins')->name('admins.')->group(functi
         return view('admins.index');
     })->name('index');
 
-    Route::get('/operators', function () {
-        return view('admins.operators');
-    })->name('operators');
+    Route::get('/operators', [UserController::class, 'operators'])->name('operators');
 
     Route::get('/drivers', function () {
         return view('admins.drivers');

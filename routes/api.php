@@ -13,7 +13,11 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
  */
+use App\Http\Controllers\Api\AdminController;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::delete('/deleteOperator/{id}', [AdminController::class, 'destroyOperator']);
+Route::post('/addOperator', [AdminController::class, 'addOperator']);

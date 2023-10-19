@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\User;
 
 class UserController extends Controller
 {
@@ -36,5 +37,10 @@ class UserController extends Controller
     public function logout() {
         auth()->logout();
         return redirect(route('login'));
+    }
+
+    public function operators() {
+        $operators = User::all()->where('rol', 'operator');
+        return view('admins.operators')->with('operators', $operators);
     }
 }

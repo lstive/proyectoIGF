@@ -49,6 +49,14 @@ class AdminController extends Controller
         //
     }
 
+    public function getOperators() {
+        return User::all()->where('rol', 'operator')->count();
+    }
+
+    public function getDrivers() {
+        return Taxista::all()->count();
+    }
+
     public function destroyOperator(string $id) {
         User::destroy($id);
         return $id;

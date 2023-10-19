@@ -42,10 +42,48 @@
     <div class="sub-container">
       <h1>Bienvenido {{auth()->user()->name}}</h1>
     </div>
+    <div class="sub-container" style="width: 60%;">
+      <canvas id="graph"></canvas>
+    </div>
   </div>
 </div>
 @endsection
 
 @push('scripts')
 <script src="/scripts/user/script.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', event => {
+      (async () => {
+          const resOperators = await fetch('/api/getOperators', {method: 'get'})
+          const resDrivers = await fetch('/api/getDrivers', {method: 'get'})
+          operators = await resOperators.json()
+          drivers = await resDrivers.json()
+
+          console.log(operators)
+          console.log(drivers)
+
+          const data = [
+              { empleado: 'Operadores', count: operators },
+              { empleado: 'Taxistas', count: drivers },
+          ];
+
+          new Chart(
+              document.getElementById('graph'),
+              {
+                  type: 'bar',
+                  data: {
+                      labels: data.map(row => row.empleado),
+                      datasets: [
+                          {
+                              label: 'Empleados Totales',
+                              data: data.map(row => row.count),
+                          }
+                      ]
+                  }
+              }
+          );
+      })()
+  })
+</script>
 @endpush

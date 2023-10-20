@@ -73,3 +73,4 @@ document.getElementById('btn-modify-driver').addEventListener('click', event => 
   document.querySelector('input[name="license"]').value = event.target.getAttribute('value-license')
   document.querySelector('input[name="direction"]').value = event.target.getAttribute('value-direction')
 })
+

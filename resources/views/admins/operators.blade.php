@@ -43,6 +43,7 @@
     <div class="sub-container" style="top: 0px; position: sticky;">
       <button class="open-shadow-container button">Agregar nuevo</button>
     </div>
+    
     <div class="sub-container">
       <table>
         <thead>

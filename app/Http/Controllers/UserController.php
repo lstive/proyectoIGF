@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Taxista;
+use App\Models\Cliente;
 
 class UserController extends Controller
 {
@@ -48,5 +49,11 @@ class UserController extends Controller
     public function drivers() {
         $drivers = Taxista::all();
         return view('admins.drivers')->with('drivers', $drivers);
+    }
+
+    // operators views
+    public function clients() {
+        $clients = Cliente::all();
+        return view('operators.clients')->with('clients', $clients);
     }
 }

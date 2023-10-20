@@ -26,3 +26,6 @@ Route::post('/addOperator', [AdminController::class, 'addOperator']);
 Route::get('/getDrivers', [AdminController::class, 'getDrivers']);
 Route::delete('/deleteDriver/{id}', [AdminController::class, 'destroyDriver']);
 Route::post('/addDriver', [AdminController::class, 'addDriver']);
+
+Route::post('/addClient', [AdminController::class, 'addClient']);
+Route::delete('/deleteClient/{id}', [AdminController::class, 'destroyClient']);

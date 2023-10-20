@@ -34,6 +34,8 @@ Route::middleware('auth.operator')->prefix('operators')->name('operators.')->gro
     Route::get('/', function () {
         return view('operators.index');
     })->name('index');
+
+    Route::get('/clients', [UserController::class, 'clients'])->name('clients');
 });
 
 /* logout */

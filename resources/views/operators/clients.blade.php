@@ -29,12 +29,10 @@
     </div>
   </div>
   <!-- form end -->
-  
   <div class="left-container">
     @component('components.userMenu')
-    <div><a href="{{route('admins.index')}}">Inicio</a></div>
-    <div><a href="{{route('admins.operators')}}">Operadores</a></div>
-    <div class="active-menu"><a href="{{route('admins.drivers')}}">Taxistas</a></div>
+    <div><a href="{{route('operators.index')}}">Inicio</a></div>
+    <div class="active-menu"><a href="{{route('operators.clients')}}">Clientes</a></div>
     <div><a href="{{route('user.logout')}}">Cerrar sesión</a></div>
     @endcomponent
   </div>
@@ -43,42 +41,37 @@
     <div class="sub-container" style="top: 0px; position: sticky;">
       <button class="open-shadow-container button">Agregar nuevo</button>
     </div>
-
     <div class="sub-container">
       <table>
         <thead>
           <tr>
             <th>Id</th>
             <th>Nombre</th>
-            <th>Email</th>
             <th>Telefono</th>
-            <th>Licensia</th>
             <th>Dirección</th>
-            <th>Contraseña</th>
             <th colspan="2">Controles</th>
           </tr>
         </thead>
         <tbody>
-          @foreach($drivers as $driver)
+          @foreach($clients as $client)
           <tr>
-            <td>{{$driver->id}}</td>
-            <td>{{$driver->name}}</td>
-            <td>{{$driver->email}}</td>
-            <td>{{$driver->phone}}</td>
-            <td>{{$driver->license}}</td>
-            <td>{{$driver->direction}}</td>
-            <td>-</td>
-            <td><button id="btn-delete-driver" value-id="{{$driver->id}}" value-rol="{{$driver->rol}}" class="button">Borrar</button></td>
-            <td><button id="btn-modify-driver" class="open-shadow-container button" value-id="{{$driver->id}}" value-name="{{$driver->name}}" value-email="{{$driver->email}}" value-phone="{{$driver->phone}}" value-direction="{{$driver->direction}}" value-license="{{$driver->license}}" value-password="{{$driver->password}}" class="button">Modificar</button></td>
+            <td>{{$client->id}}</td>
+            <td>{{$client->name}}</td>
+            <td>{{$client->phone}}</td>
+            <td>{{$client->direction}}</td>
+            <td><button id="btn-delete-client" value-id="{{$client->id}}" class="button">Borrar</button></td>
+            <td><button id="btn-modify-client" class="open-shadow-container button" value-id="{{$client->id}}" value-name="{{$client->name}}" value-phone="{{$client->phone}}" value-direction="{{$client->direction}}" class="button">Modificar</button></td>
           </tr>
           @endforeach
         </tbody>
       </table>
     </div>
+    
   </div>
 </div>
 @endsection
 
 @push('scripts')
 <script src="/scripts/user/script.js"></script>
+<script src="/scripts/user/operator/script.js"></script>
 @endpush

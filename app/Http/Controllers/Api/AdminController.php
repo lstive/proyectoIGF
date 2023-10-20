@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Taxista;
+use App\Models\Cliente;
 
 class AdminController extends Controller
 {
@@ -115,5 +116,28 @@ class AdminController extends Controller
         }
         
         return redirect(route('admins.drivers'));
+    }
+
+    public function addClient() {
+        if(!request()->get('id')) {
+            $user = new Cliente;
+            $user->name = request()->get('name');
+            $user->phone = request()->get('phone');
+            $user->direction = request()->get('direction');
+            $user->save();
+        }else {
+            $user = Cliente::find(request()->get('id'));
+            $user->name = request()->get('name');
+            $user->phone = request()->get('phone');
+            $user->direction = request()->get('direction');
+            $user->save();
+        }
+        
+        return redirect(route('operators.clients'));
+    }
+
+    public function destroyClient($id) {
+        Cliente::destroy($id);
+        return $id;
     }
 }

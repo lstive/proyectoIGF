@@ -56,4 +56,8 @@ class UserController extends Controller
         $clients = Cliente::all();
         return view('operators.clients')->with('clients', $clients);
     }
+
+    public function trips() {
+        return view('operators.trips');
+    }
 }

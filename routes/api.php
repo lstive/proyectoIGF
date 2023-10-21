@@ -29,3 +29,6 @@ Route::post('/addDriver', [AdminController::class, 'addDriver']);
 
 Route::post('/addClient', [AdminController::class, 'addClient']);
 Route::delete('/deleteClient/{id}', [AdminController::class, 'destroyClient']);
+
+Route::post('/filterClients', [AdminController::class, 'filterClients']);
+Route::post('/filterDrivers', [AdminController::class, 'filterDrivers']);

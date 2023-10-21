@@ -4,6 +4,7 @@
 <link href="/styles/user/styles.css" rel="stylesheet"/>
 <link href="/styles/user/user-menu.css" rel="stylesheet"/>
 <link href="/styles/user/form.css" rel="stylesheet"/>
+
 @endpush
 
 @section('content')
@@ -33,6 +34,7 @@
     @component('components.userMenu')
     <div><a href="{{route('operators.index')}}">Inicio</a></div>
     <div class="active-menu"><a href="{{route('operators.clients')}}">Clientes</a></div>
+    <div><a href="{{route('operators.trips')}}">Viajes</a></div>
     <div><a href="{{route('user.logout')}}">Cerrar sesión</a></div>
     @endcomponent
   </div>
@@ -72,6 +74,7 @@
 @endsection
 
 @push('scripts')
-<script src="/scripts/user/script.js"></script>
 <script src="/scripts/user/operator/script.js"></script>
+<script src="/scripts/user/script.js"></script>
+
 @endpush

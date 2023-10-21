@@ -36,6 +36,7 @@ Route::middleware('auth.operator')->prefix('operators')->name('operators.')->gro
     })->name('index');
 
     Route::get('/clients', [UserController::class, 'clients'])->name('clients');
+    Route::get('/trips', [UserController::class, 'trips'])->name('trips');
 });
 
 /* logout */

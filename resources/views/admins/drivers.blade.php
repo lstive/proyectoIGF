@@ -13,14 +13,17 @@
   <div class="shadow-container">
     
     <div class="form-container">
-      <form method="post" action="/api/addClient">
+      <form method="post" action="/api/addDriver">
         @csrf
         <button class="close-shadow-container button">Cerrar</button>
         <hr/>
         <input name="id" type="text" value="" placeholder="id" hidden/><br/>
         <input name="name" type="text" value="" placeholder="Nombre"/><br/>
+        <input name="email" type="text" value="" placeholder="Email"/><br/>
         <input name="phone" type="text" value="" placeholder="Telefono"/><br/>
+        <input name="license" type="text" value="" placeholder="Licensia"/><br/>
         <input name="direction" type="text" value="" placeholder="Dirección"/><br/>
+        <input name="password" type="text" value="" placeholder="Contraseña"/><br/>
         <div>
           <input name="" type="submit" value="Agregar"/>
           <input name="" type="submit" value="Guardar cambios"/>
@@ -80,5 +83,37 @@
 @endsection
 
 @push('scripts')
+<script>
+  document.getElementsByTagName('table')[0].addEventListener('click', event => {
+      event.preventDefault()
+      if (event.target.innerText == 'Modificar') {
+          shadowContainer.classList.toggle('toggle-shadow-container')
+          document.querySelector('input[name="id"]').value = event.target.getAttribute('value-id')
+          document.querySelector('input[name="name"]').value = event.target.getAttribute('value-name')
+          document.querySelector('input[name="email"]').value = event.target.getAttribute('value-email')
+          document.querySelector('input[name="phone"]').value = event.target.getAttribute('value-phone')
+          document.querySelector('input[name="license"]').value = event.target.getAttribute('value-license')
+          document.querySelector('input[name="direction"]').value = event.target.getAttribute('value-direction')
+      }
+  })
+
+  // admin drivers crud
+  document.getElementsByTagName('table')[0].addEventListener('click', event => {
+      if (event.target.innerText == 'Borrar') {
+          const id = event.target.getAttribute('value-id')
+
+          fetch('/api/deleteDriver/' + id, {
+              method: 'delete'
+          }).then(response => {
+              window.location.reload()
+          })
+      }
+  })
+
+
+
+
+</script>
 <script src="/scripts/user/script.js"></script>
+
 @endpush

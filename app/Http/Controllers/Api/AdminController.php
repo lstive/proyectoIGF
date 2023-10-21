@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use App\Models\Taxista;
 use App\Models\Cliente;
@@ -139,5 +140,14 @@ class AdminController extends Controller
     public function destroyClient($id) {
         Cliente::destroy($id);
         return $id;
+    }
+
+    // filter
+    public function filterClients() {
+        return DB::table('clientes')->where(request()->get('filterBy'), 'like', '%' . request()->get('filter') .'%')->get();
+    }
+
+    public function filterDrivers() {
+        return DB::table('taxistas')->where(request()->get('filterBy'), 'like', '%' . request()->get('filter') .'%')->get();
     }
 }

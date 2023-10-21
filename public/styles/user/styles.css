@@ -3,6 +3,7 @@
     height: 100vh;
     background-color: #f0f0f0;
     display: flex;
+    flex-wrap: no-wrap;
 }
 
 .left-container {
@@ -10,11 +11,13 @@
 }
 
 .right-container {
-    flex-grow: 1;
-    overflow-y: auto;
+    height: 100vh;
     box-sizing: border-box;
     padding: 40px;
-    
+    width: 100%;
+    min-height: 100vh;
+    max-height: 100vh;
+    overflow-y: auto;
 }
 
 .shadow-container {

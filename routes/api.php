@@ -32,3 +32,6 @@ Route::delete('/deleteClient/{id}', [AdminController::class, 'destroyClient']);
 
 Route::post('/filterClients', [AdminController::class, 'filterClients']);
 Route::post('/filterDrivers', [AdminController::class, 'filterDrivers']);
+
+Route::post('/addTravel', [AdminController::class, 'addTravel']);
+Route::delete('/deleteTravel/{id}', [AdminController::class, 'destroyTravel']);

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use App\Models\Taxista;
 use App\Models\Cliente;
+use App\Models\Viaje;
 
 class AdminController extends Controller
 {
@@ -149,5 +150,29 @@ class AdminController extends Controller
 
     public function filterDrivers() {
         return DB::table('taxistas')->where(request()->get('filterBy'), 'like', '%' . request()->get('filter') .'%')->get();
+    }
+
+    public function addTravel() {
+        $viaje = new Viaje;
+        $viaje->user_id = request()->get('user_id');
+        $viaje->cliente_id = request()->get('client-id');
+        $viaje->taxista_id = request()->get('driver-id');
+        $viaje->from = request()->get('from');
+        $viaje->from_coords = request()->get('from-coords');
+        $viaje->to = request()->get('to');
+        $viaje->to_coords = request()->get('to-coords');
+        $viaje->indications = request()->get('indications');
+        $viaje->price = request()->get('price');
+        $viaje->passengers = request()->get('number');
+        $viaje->fecha = request()->get('date');
+        $viaje->estado = 'disponible';
+        $viaje->save();
+
+        return request()->get('id');
+    }
+
+    public function destroyTravel($id) {
+        Viaje::destroy($id);
+        return $id;
     }
 }

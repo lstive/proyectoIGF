@@ -174,4 +174,70 @@ document.getElementById('btn-filter-drivers').addEventListener('click', event =>
   })();
 })
 
+document.addEventListener('DOMContentLoaded', event => {
+  (async () => {
+    let filteredClients = document.getElementById('filtered-clients')
+    let filterBy = document.getElementById('filter-clients-by').value
+    let filter = document.querySelector('input[name="filter-clients"]').value
+
+    const req = {
+      filterBy,
+      filter
+    }
+
+    const res = await fetch('/api/filterClients', {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(req)
+    })
+
+    const query = await res.json()
+    console.log(query)
+
+    filteredClients.innerHTML = ''
+    let htmlCode = ''
+    let x = 2
+    query.forEach(client => {
+      htmlCode += `<option value="${client.id}">${client.name}</option>`
+    })
+
+    filteredClients.innerHTML = htmlCode
+  })();
+
+  (async () => {
+    let filteredClients = document.getElementById('filtered-drivers')
+    let filterBy = document.getElementById('filter-drivers-by').value
+    let filter = document.querySelector('input[name="filter-drivers"]').value
+
+    const req = {
+      filterBy,
+      filter
+    }
+
+    const res = await fetch('/api/filterDrivers', {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(req)
+    })
+
+    const query = await res.json()
+    console.log(query)
+
+    filteredClients.innerHTML = ''
+    let htmlCode = ''
+    let x = 2
+    query.forEach(client => {
+      htmlCode += `<option value="${client.id}">${client.name}</option>`
+    })
+
+    filteredClients.innerHTML = htmlCode
+  })();
+  
+  
+})
+
 window.initMap = initMap;

@@ -14,6 +14,7 @@
     <div class="active-menu"><a href="{{route('admins.index')}}">Inicio</a></div>
     <div><a href="{{route('operators.clients')}}">Clientes</a></div>
     <div><a href="{{route('operators.trips')}}">Viajes</a></div>
+    <div><a href="{{route('operators.travels')}}">Viajes registrados</a></div>
     <div><a href="{{route('user.logout')}}">Cerrar sesión</a></div>
     @endcomponent
   </div>

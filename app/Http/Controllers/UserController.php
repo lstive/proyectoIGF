@@ -16,6 +16,10 @@ class UserController extends Controller
                 return redirect(route('operators.index'));
             }
         }
+
+        if(auth()->guard('driver')->check()) {
+            return redirect(route('drivers.index'));
+        }
         
         return view('login');
     }
@@ -25,6 +29,10 @@ class UserController extends Controller
             'email' => request()->get('email'),
             'password' => request()->get('password'),
         ];
+
+        if(auth()->guard('driver')->attempt($credentials)){
+            return redirect(route('drivers.index'));
+        }
 
         if(auth()->attempt($credentials)) {
             if(auth()->user()->rol == 'admin') {
@@ -37,8 +45,15 @@ class UserController extends Controller
         return redirect('login');
     }
 
+
+    public function logoutDriver() {
+        auth()->guard('driver')->logout();
+        return redirect(route('login'));
+    }
+    
     public function logout() {
         auth()->logout();
+        
         return redirect(route('login'));
     }
 

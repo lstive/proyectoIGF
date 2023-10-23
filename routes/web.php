@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
    |
  */
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\DriverController;
 
 /* login */
 Route::get('/login', [UserController::class, 'index'])->name('login');
@@ -40,5 +41,14 @@ Route::middleware('auth.operator')->prefix('operators')->name('operators.')->gro
     Route::get('/travels', [UserController::class, 'travels'])->name('travels');
 });
 
+Route::middleware('auth.driver')->prefix('drivers')->name('drivers.')->group(function () {
+    Route::get('/', function () {
+        return view('drivers.index');
+    })->name('index');
+    Route::get('/available', [DriverController::class, 'available'])->name('available');
+    Route::get('/doing', [DriverController::class, 'doing'])->name('doing');
+});
+
 /* logout */
 Route::middleware('auth')->get('/logout', [UserController::class, 'logout'])->name('user.logout');
+Route::middleware('auth.driver')->get('/logoutDriver', [UserController::class, 'logoutDriver'])->name('user.logoutDriver');

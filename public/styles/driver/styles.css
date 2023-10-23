@@ -1,0 +1,164 @@
+#map {
+  flex-basis: 0;
+  flex-grow: 4;
+  height: 100%;
+}
+
+h1, h2  {
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+.navbar {
+    background-color: #416675;
+    height: 60px;
+    top: 0px;
+    position: sticky;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-left: 20px;
+    padding-right: 20px;
+    overflow: hidden;
+    flex-wrap: nowrap;
+    transition: 0.5s;
+}
+
+.navbar-button button {
+    background-image: url('/images/toggle.svg');
+    height: 40px;
+    width: 40px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+    border: none;
+    background-color: transparent;
+    border-radius: 4px;
+}
+
+.navbar-button button:hover {
+    background-color: #669bb0;
+}
+
+.navbar-toggle {
+    height: 240px;
+}
+
+.navbar div {
+    width: 100%;
+    flex-basis: 60px;
+    flex-shrink: 0;
+    text-align: center;
+}
+
+.navbar-button {
+    display: flex;
+    align-items: center;
+    justify-content: end !important;
+}
+
+.navbar a {
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 560;
+}
+
+.sub-content {
+    box-shadow: 2px 2px 4px silver;
+    box-sizing: border-box;
+    padding: 10px;
+    border-radius: 6px;
+}
+
+.active {
+    border-bottom: 1px solid #ffffff;
+}
+
+/* grid */
+.container {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 40px;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+    gap: 40px;
+}
+
+.md-column-1 {
+    flex-basis: 100%;
+    flex-grow: 1;
+}
+
+.lg-column-1 {
+    flex-basis: 100%;
+    flex-grow: 1;
+}
+
+.md-column-2 {
+    flex-basis: 100%;
+    flex-grow: 1;
+}
+
+.lg-column-2 {
+    flex-basis: 100%;
+    flex-grow: 1;
+}
+
+.md-column-3 {
+    flex-basis: 100%;
+    flex-grow: 1;
+}
+
+.lg-column-3 {
+    flex-basis: 100%;
+    flex-grow: 1;
+}
+
+/* medium */
+@media screen and (min-width: 460px) {
+    .md-column-1 {
+        flex-basis: 90%;
+    }
+    
+    .md-column-3 {
+        flex-basis: 30%;
+    }
+
+    .md-column-2 {
+        flex-basis: 40%;
+    }
+
+    .navbar {
+        flex-direction: row;
+        gap: 20px;
+    }
+
+    .navbar-button {
+        flex-basis: 0px !important;
+        overflow: hidden;
+    }
+    
+    .navbar div {
+        flex-basis: auto;
+        width: auto;
+    }
+}
+
+/* large */
+@media screen and (min-width: 720px) {
+    .lg-column-1 {
+        flex-basis: 90%;
+    }
+    
+    .lg-column-2 {
+        flex-basis: 40%;
+    }
+
+    .lg-column-3 {
+        flex-basis: 30%;
+    }
+}

@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
    |
  */
 use App\Http\Controllers\Api\AdminController;
+use App\Http\Controllers\Api\DriverController;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -35,3 +36,6 @@ Route::post('/filterDrivers', [AdminController::class, 'filterDrivers']);
 
 Route::post('/addTravel', [AdminController::class, 'addTravel']);
 Route::delete('/deleteTravel/{id}', [AdminController::class, 'destroyTravel']);
+
+Route::post('/driveBegin', [DriverController::class, 'driveBegin']);
+Route::post('/driveEnd', [DriverController::class, 'driveEnd']);

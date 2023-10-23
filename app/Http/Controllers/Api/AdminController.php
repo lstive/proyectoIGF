@@ -168,7 +168,7 @@ class AdminController extends Controller
         $viaje->estado = 'disponible';
         $viaje->save();
 
-        return request()->get('id');
+        return redirect(route('operators.trips'));
     }
 
     public function destroyTravel($id) {

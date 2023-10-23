@@ -56,6 +56,7 @@ class Kernel extends HttpKernel
         'auth' => \App\Http\Middleware\Authenticate::class,
         'auth.taxista' => \App\Http\Middleware\TaxistaMiddleware::class,
         'auth.admin' => \App\Http\Middleware\AdminAuth::class,
+        'auth.driver' => \App\Http\Middleware\DriverAuth::class,
         'auth.operator' => \App\Http\Middleware\OperatorAuth::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'auth.session' => \Illuminate\Session\Middleware\AuthenticateSession::class,

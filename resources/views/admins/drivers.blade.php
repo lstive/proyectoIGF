@@ -4,11 +4,13 @@
 <link href="/styles/user/styles.css" rel="stylesheet"/>
 <link href="/styles/user/user-menu.css" rel="stylesheet"/>
 <link href="/styles/user/form.css" rel="stylesheet"/>
+<link href="/styles/notify.css" rel="stylesheet"/>
 @endpush
 
 @section('content')
 <div class="container">
-
+  @include('components.notify', ['ok' => 'Exito al hacer cambios', 'error' => 'Error al hacer cambios'])
+  
   <!-- form -->
   <div class="shadow-container">
     
@@ -115,5 +117,14 @@
 
 </script>
 <script src="/scripts/user/script.js"></script>
-
+<script>
+  document.addEventListener('DOMContentLoaded', event => {
+      document.getElementsByClassName('notify')[0].classList.toggle('notify-show')
+      setTimeout(() => {
+          if(document.getElementsByClassName('notify')[0].innerText != ' x ') {
+              document.getElementsByClassName('notify')[0].classList.toggle('notify-show')
+          }
+      }, 4000)
+  })
+</script>
 @endpush

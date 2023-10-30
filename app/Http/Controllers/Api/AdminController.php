@@ -62,11 +62,23 @@ class AdminController extends Controller
 
     public function destroyOperator(string $id) {
         User::destroy($id);
-        return $id;
+        return redirect(route('admins.operators', ['ok' => 1]));
     }
 
     public function addOperator() {
         if(!request()->get('id')) {
+            $input = [
+                request()->get('name'),
+                request()->get('email'),
+                request()->get('password'),
+            ];
+
+            foreach($input as $value) {
+                if($value == '' | $value == null) {
+                    return redirect(route('admins.operators', ['ok' => -1]));
+                }
+            }
+            
             $user = new User;
             $user->name = request()->get('name');
             $user->email = request()->get('email');
@@ -74,6 +86,17 @@ class AdminController extends Controller
             $user->password = bcrypt(request()->get('password'));
             $user->save();
         }else {
+            $input = [
+                request()->get('name'),
+                request()->get('email'),
+            ];
+
+            foreach($input as $value) {
+                if($value == '' | $value == null) {
+                    return redirect(route('admins.operators', ['ok' => -1]));
+                }
+            }
+            
             $user = User::find(request()->get('id'));
             $user->name = request()->get('name');
             $user->email = request()->get('email');
@@ -85,16 +108,31 @@ class AdminController extends Controller
             $user->save();
         }
         
-        return redirect(route('admins.operators'));
+        return redirect(route('admins.operators', ['ok' => 1]));
     }
 
     public function destroyDriver(string $id) {
         Taxista::destroy($id);
-        return $id;
+        return redirect(route('admins.drivers', ['ok' => 1]));
     }
 
     public function addDriver() {
         if(!request()->get('id')) {
+            $input = [
+                request()->get('name'),
+                request()->get('email'),
+                request()->get('phone'),
+                request()->get('license'),
+                request()->get('direction'),
+                request()->get('password'),
+            ];
+
+            foreach($input as $value) {
+                if($value == '' | $value == null) {
+                    return redirect(route('admins.drivers', ['ok' => -1]));
+                }
+            }
+            
             $user = new Taxista;
             $user->name = request()->get('name');
             $user->email = request()->get('email');
@@ -104,6 +142,20 @@ class AdminController extends Controller
             $user->password = bcrypt(request()->get('password'));
             $user->save();
         }else {
+            $input = [
+                request()->get('name'),
+                request()->get('email'),
+                request()->get('phone'),
+                request()->get('license'),
+                request()->get('direction'),
+            ];
+
+            foreach($input as $value) {
+                if($value == '' | $value == null) {
+                    return redirect(route('admins.drivers', ['ok' => -1]));
+                }
+            }
+            
             $user = Taxista::find(request()->get('id'));
             $user->name = request()->get('name');
             $user->email = request()->get('email');
@@ -117,10 +169,22 @@ class AdminController extends Controller
             $user->save();
         }
         
-        return redirect(route('admins.drivers'));
+        return redirect(route('admins.drivers', ['ok' => 1]));
     }
 
     public function addClient() {
+        $input = [
+            request()->get('name'),
+            request()->get('phone'),
+            request()->get('direction'),
+        ];
+
+        foreach($input as $value) {
+            if($value == '' | $value == null) {
+                return redirect(route('operators.clients', ['ok' => -1]));
+            }
+        }
+        
         if(!request()->get('id')) {
             $user = new Cliente;
             $user->name = request()->get('name');
@@ -135,12 +199,12 @@ class AdminController extends Controller
             $user->save();
         }
         
-        return redirect(route('operators.clients'));
+        return redirect(route('operators.clients', ['ok' => 1]));
     }
 
     public function destroyClient($id) {
         Cliente::destroy($id);
-        return $id;
+        return redirect(route('operators.clients', ['ok' => 1]));
     }
 
     // filter
@@ -153,6 +217,26 @@ class AdminController extends Controller
     }
 
     public function addTravel() {
+        $input = [
+            request()->get('user_id'),
+            request()->get('client-id'),
+            request()->get('driver-id'),
+            request()->get('from'),
+            request()->get('from-coords'),
+            request()->get('to'),
+            request()->get('to-coords'),
+            request()->get('indications'),
+            request()->get('price'),
+            request()->get('number'),
+            request()->get('date'),
+        ];
+
+        foreach($input as $value) {
+            if($value == '' | $value == null) {
+                return redirect(route('operators.trips', ['ok' => -1]));
+            }
+        }
+        
         $viaje = new Viaje;
         $viaje->user_id = request()->get('user_id');
         $viaje->cliente_id = request()->get('client-id');
@@ -168,7 +252,7 @@ class AdminController extends Controller
         $viaje->estado = 'disponible';
         $viaje->save();
 
-        return redirect(route('operators.trips'));
+        return redirect(route('operators.trips', ['ok' => 1]));
     }
 
     public function destroyTravel($id) {

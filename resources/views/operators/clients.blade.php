@@ -4,11 +4,12 @@
 <link href="/styles/user/styles.css" rel="stylesheet"/>
 <link href="/styles/user/user-menu.css" rel="stylesheet"/>
 <link href="/styles/user/form.css" rel="stylesheet"/>
-
+<link href="/styles/notify.css" rel="stylesheet"/>
 @endpush
 
 @section('content')
 <div class="container">
+  @include('components.notify', ['ok' => 'Exito al hacer cambios', 'error' => 'Error al hacer cambios'])
 
   <!-- form -->
   <div class="shadow-container">
@@ -75,6 +76,42 @@
 @endsection
 
 @push('scripts')
+<script>
+  document.getElementsByTagName('table')[0].addEventListener('click', event => {
+      if (event.target.getAttribute('value-rol') == 'operator') {
+          if (event.target.innerText == 'Modificar') {
+              console.log('gaaaaa')
+              shadowContainer.classList.toggle('toggle-shadow-container')
+              document.querySelector('input[name="id"]').value = event.target.getAttribute('value-id')
+              document.querySelector('input[name="name"]').value = event.target.getAttribute('value-name')
+              document.querySelector('input[name="phone"]').value = event.target.getAttribute('value-phone')
+              document.querySelector('input[name="direction"]').value = event.target.getAttribute('value-direction')
+          }
+      }
+  })
+</script>
 <script src="/scripts/user/operator/script.js"></script>
 <script src="/scripts/user/script.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', event => {
+      document.getElementsByClassName('notify')[0].classList.toggle('notify-show')
+      setTimeout(() => {
+          if(document.getElementsByClassName('notify')[0].innerText != ' x ') {
+              document.getElementsByClassName('notify')[0].classList.toggle('notify-show')
+          }
+      }, 4000)
+  })
+
+  document.getElementsByTagName('table')[0].addEventListener('click', event => {
+      if (event.target.innerText == 'Modificar') {
+          shadowContainer.classList.toggle('toggle-shadow-container')
+          document.querySelector('input[name="id"]').value = event.target.getAttribute('value-id')
+          document.querySelector('input[name="name"]').value = event.target.getAttribute('value-name')
+          document.querySelector('input[name="phone"]').value = event.target.getAttribute('value-phone')
+          document.querySelector('input[name="direction"]').value = event.target.getAttribute('value-direction')
+      }
+  })
+
+</script>
+
 @endpush

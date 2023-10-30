@@ -12,7 +12,7 @@
   <form method="get" action="/auth">
     @csrf
     <input name="email" type="text" value="" placeholder="Email"/><br/>
-    <input name="password" type="text" value="" placeholder="Contraseña"/><br/>
+    <input name="password" type="password" value="" placeholder="Contraseña"/><br/>
     <input name="" type="submit" value="Iniciar sesión"/>
   </form>
 </div>

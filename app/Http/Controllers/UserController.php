@@ -78,6 +78,6 @@ class UserController extends Controller
     }
 
     public function travels() {
-        return view('operators.travels')->with('travels', DB::select('SELECT viajes.id as id, viajes.fecha as fecha, clientes.name as cliente, taxistas.name as taxista, viajes.from as "from", viajes.to as "to" from clientes inner join viajes on clientes.id=viajes.cliente_id inner join users on users.id=viajes.user_id inner join taxistas on viajes.taxista_id=taxistas.id;'));
+        return view('operators.travels')->with('travels', DB::select('SELECT viajes.id as id, viajes.fecha as fecha, clientes.name as cliente, taxistas.name as taxista, viajes.from as "from", viajes.to as "to" from clientes inner join viajes on clientes.id=viajes.cliente_id inner join users on users.id=viajes.user_id inner join taxistas on viajes.taxista_id=taxistas.id WHERE viajes.estado="disponible";'));
     }
 }

@@ -60,9 +60,6 @@
           operators = await resOperators.json()
           drivers = await resDrivers.json()
 
-          console.log(operators)
-          console.log(drivers)
-
           const data = [
               { empleado: 'Operadores', count: operators },
               { empleado: 'Taxistas', count: drivers },

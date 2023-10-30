@@ -50,9 +50,14 @@ class DriverController extends Controller
     }
 
     public function driveBegin() {
-        $viaje = Viaje::find(request()->get('id'));
-        $viaje->estado = 'en curso';
-        $viaje->save();
+        $viajes = Viaje::where('estado', 'en curso')->get()->count();
+
+        if($viajes == 0) {
+            $viaje = Viaje::find(request()->get('id'));
+            $viaje->estado = 'en curso';
+            $viaje->save();
+        }
+        
         return $viaje->id;
     }
 

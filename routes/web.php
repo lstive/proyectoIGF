@@ -18,6 +18,9 @@ use App\Http\Controllers\DriverController;
 /* login */
 Route::get('/login', [UserController::class, 'index'])->name('login');
 Route::get('/auth', [UserController::class, 'login']);
+Route::get('/', function () {
+    return redirect(route('login'));
+});
 
 
 /* admins views */

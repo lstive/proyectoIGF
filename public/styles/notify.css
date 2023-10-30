@@ -1,0 +1,32 @@
+.notify {
+    position: fixed;
+    top: 20px;
+    right: -400px;
+    overflow: hidden;
+    transition-property: right;
+    transition-duration: 2s;
+    box-shadow: 2px 2px 4px silver;
+    z-index: 20;
+}
+
+.notify-ok-content, .notify-error-content {
+    background-color: #ffffff;
+    
+    padding: 20px;
+    border-radius: 4px;
+    color: gray;
+}
+
+.notify-ok-content {
+    border-left: 10px solid #96f069;
+}
+
+.notify-error-content {
+    border-left: 10px solid #f09069;
+}
+
+.notify-show {
+    right: 20px;
+    transition-property: right;
+    transition-duration: 2s;
+}

@@ -3,13 +3,25 @@ const closeShadowContainer = document.getElementsByClassName('close-shadow-conta
 const shadowContainer = document.getElementsByClassName('shadow-container')[0]
 
 openShadowContainer.addEventListener('click', () => {
-  shadowContainer.classList.toggle('toggle-shadow-container')
-
+    document.getElementById('changePasswordField').style.display = 'none';
+    document.querySelector('input[name="id"]').value = '';
+    document.querySelector('input[name="name"]').value = '';
+    document.querySelector('input[name="email"]').value = '';
+    document.querySelector('input[name="phone"]').value = '';
+    document.querySelector('input[name="license"]').value = '';
+    document.querySelector('input[name="direction"]').value = '';
+    shadowContainer.classList.toggle('toggle-shadow-container')
+    document.getElementById('changePassword').checked = true;
+    document.getElementById('password-div').style.display = 'block'
 })
+
+
+
 
 closeShadowContainer.addEventListener('click', event => {
   event.preventDefault()
   shadowContainer.classList.toggle('toggle-shadow-container')
+  document.querySelector('input[name="password"]').value = '';
 })
 
 // operator value

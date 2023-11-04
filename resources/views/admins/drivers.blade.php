@@ -61,13 +61,24 @@
         @enderror
       </div>
 
-      <div class="formulario-campo">
-        <label for="password">Contraseña</label>
-        <input name="password" type="text" value="" id="password" placeholder="Contraseña"/>
-        @error('password')
-        <small style="color: red;">{{ $message }}</small>
-        @enderror
-      </div>
+
+      <div class="formulario-campo" id="changePasswordField" style="display: none;">
+    <input type="checkbox" id="changePassword" name="changePassword" {{ old('changePassword') ? 'checked' : '' }}>
+    <label for="changePassword">Cambiar contraseña</label>
+</div>
+
+<div class="formulario-campo" id = "password-div">
+    <div style="display: flex;">
+        <input name="password" type="password" value="" id="password" placeholder="Contraseña"/>
+        <button type="button" id="showPassword">Mostrar</button>
+    </div>
+    @error('password')
+    <small style="color: red;">{{ $message }}</small>
+    @enderror
+</div>
+
+      
+
 
       <div>
         <input name="" type="submit" value="Agregar" />
@@ -89,7 +100,7 @@
   
   <div class="right-container">
     <div class="sub-container" style="top: 0px; position: sticky;">
-      <button class="open-shadow-container button">Agregar nuevo</button>
+      <button id="btn-new-driver" class="open-shadow-container button">Agregar nuevo</button>
     </div>
     @if(session('registro'))
       <div class="sub-container alert-dismissible fade show" role="alert" style="background-color: #28a745; color: #fff; padding: 10px; border-radius: 4px;">
@@ -142,17 +153,33 @@
 @endsection
 
 @push('scripts')
+  @if(count($errors) > 0)
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const shadowContainer = document.getElementsByClassName('shadow-container')[0]
+            shadowContainer.classList.add('toggle-shadow-container')
+        });
+    </script>
+  @endif
+
 <script>
   document.getElementsByTagName('table')[0].addEventListener('click', event => {
       event.preventDefault()
-      if (event.target.innerText == 'Modificar') {
-          shadowContainer.classList.toggle('toggle-shadow-container')
+      
+      if (event.target.innerText === 'Modificar') { 
+          
+          document.getElementById('changePasswordField').style.display = 'block'
           document.querySelector('input[name="id"]').value = event.target.getAttribute('value-id')
           document.querySelector('input[name="name"]').value = event.target.getAttribute('value-name')
           document.querySelector('input[name="email"]').value = event.target.getAttribute('value-email')
           document.querySelector('input[name="phone"]').value = event.target.getAttribute('value-phone')
           document.querySelector('input[name="license"]').value = event.target.getAttribute('value-license')
           document.querySelector('input[name="direction"]').value = event.target.getAttribute('value-direction')
+          document.getElementById('changePassword').checked = false;
+          document.getElementById('password-div').style.display = 'none'
+
+          shadowContainer.classList.toggle('toggle-shadow-container')
+
       }
   })
 
@@ -172,12 +199,11 @@
       }
     }
   });
-
-
 </script>
 
 <script src="/scripts/user/script.js"></script>
 <script>
+  /*
   document.addEventListener('DOMContentLoaded', event => {
       document.getElementsByClassName('notify')[0].classList.toggle('notify-show')
       setTimeout(() => {
@@ -185,7 +211,7 @@
               document.getElementsByClassName('notify')[0].classList.toggle('notify-show')
           }
       }, 4000)
-  })
+  })*/
 
  
 
@@ -201,4 +227,32 @@
         });
     });
   </script>
+
+<script>
+    const passwordField = document.getElementById('password');
+    const showPasswordButton = document.getElementById('showPassword');
+
+    showPasswordButton.addEventListener('click', function () {
+        if (passwordField.type === 'password') {
+            passwordField.type = 'text';
+            showPasswordButton.textContent = 'Ocultar';
+        } else {
+            passwordField.type = 'password';
+            showPasswordButton.textContent = 'Mostrar';
+        }
+    });
+</script>
+
+<script>
+    const changePasswordCheckbox = document.getElementById('changePassword')
+    changePasswordCheckbox.addEventListener('change', function() {
+
+        if (this.checked) {
+            document.getElementById('password-div').style.display = 'block'
+        } else {
+            // Si el checkbox no está seleccionado, oculta el campo de contraseña
+            document.getElementById('password-div').style.display = 'none'
+        }
+    });
+</script>
 @endpush

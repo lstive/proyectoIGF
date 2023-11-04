@@ -17,12 +17,30 @@
     <div class="form-container">
       <form method="post" action="/api/addClient">
         @csrf
-        <button class="close-shadow-container button">Cerrar</button>
+        <button type ="button"class="close-shadow-container button" id="closeButton">Cerrar</button>
         <hr/>
-        <input name="id" type="text" value="" placeholder="id" hidden/><br/>
-        <input name="name" type="text" value="" placeholder="Nombre"/><br/>
-        <input name="phone" type="text" value="" placeholder="Telefono"/><br/>
-        <input name="direction" type="text" value="" placeholder="Dirección"/><br/>
+        <input name="id" type="text" value="{{ old('id') }}" placeholder="id" hidden/><br/>
+        <div class="formulario-campo">
+          <label for="name">Nombre</label>
+          <input name="name" type="text" value="{{ old('name') }}" id="name" placeholder="Nombre" required/>
+          @error('name')
+            <small style="color: red;">{{ $message }}</small>
+          @enderror
+        </div>
+        <div class="formulario-campo">
+          <label for="name">Nombre</label>
+          <input name="phone" type="text" value="{{ old('phone') }}" id="phone" placeholder="Telefono" required/>
+          @error('phone')
+            <small style="color: red;">{{ $message }}</small>
+          @enderror
+        </div>
+        <div class="formulario-campo">
+          <label for="name">Nombre</label>
+          <input name="direction" type="text" value="{{ old('direction') }}" id="direction" placeholder="Direccion" required/>
+          @error('direction')
+            <small style="color: red;">{{ $message }}</small>
+          @enderror
+        </div>
         <div>
           <input name="" type="submit" value="Agregar"/>
           <input name="" type="submit" value="Guardar cambios"/>
@@ -43,8 +61,24 @@
   
   <div class="right-container">
     <div class="sub-container" style="top: 0px; position: sticky;">
-      <button class="open-shadow-container button">Agregar nuevo</button>
+      <button class="open-shadow-container-client button">Agregar nuevo</button>
     </div>
+    @if(session('registro'))
+      <div class="sub-container alert-dismissible fade show" role="alert" style="background-color: #28a745; color: #fff; padding: 10px; border-radius: 4px;">
+        {{ session('registro') }}
+      </div>
+    @endif
+    @if(session('actualizacion'))
+      <div class="sub-container alert-dismissible fade show" role="alert" style="background-color: #007BFF; color: #fff;" padding: 10px; border-radius: 4px;">
+        {{ session('actualizacion') }}
+      </div>
+    @endif
+    @if(session('borrado'))
+      <div class="sub-container alert-dismissible fade show" role="alert" style="background-color: #FF6B6B; color: #fff;" padding: 10px; border-radius: 4px;">
+        {{ session('borrado') }}
+      </div>
+    @endif
+
     <div class="sub-container">
       <table>
         <thead>
@@ -76,6 +110,19 @@
 @endsection
 
 @push('scripts')
+
+@if(count($errors) > 0)
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          if(document.querySelector('input[name="id"]').value ===''){
+            //esto literal no hace nada pero invoca a traer el id de nuevo para no perder el registro cuando se vuelva a subir una solicitud
+          }
+            const shadowContainer = document.getElementsByClassName('shadow-container')[0]
+            shadowContainer.classList.add('toggle-shadow-container')
+        });
+    </script>
+  @endif
+
 <script>
   document.getElementsByTagName('table')[0].addEventListener('click', event => {
       if (event.target.getAttribute('value-rol') == 'operator') {
@@ -89,19 +136,29 @@
           }
       }
   })
+
+  const closeButton = document.getElementById('closeButton');
+
+// Agrega un evento de clic al botón
+closeButton.addEventListener('click', function() {
+  shadowContainer.classList.toggle('toggle-shadow-container');
+  
+});
 </script>
 <script src="/scripts/user/operator/script.js"></script>
 <script src="/scripts/user/script.js"></script>
 <script>
-  document.addEventListener('DOMContentLoaded', event => {
-      document.getElementsByClassName('notify')[0].classList.toggle('notify-show')
-      setTimeout(() => {
-          if(document.getElementsByClassName('notify')[0].innerText != ' x ') {
-              document.getElementsByClassName('notify')[0].classList.toggle('notify-show')
-          }
-      }, 4000)
-  })
-
+  
+const openShadowContainerClient = document.getElementsByClassName('open-shadow-container-client')[0]
+openShadowContainerClient.addEventListener('click', () => {
+  
+  //document.getElementById('changePasswordField').style.display = 'none';
+  document.querySelector('input[name="id"]').value = '';
+  document.querySelector('input[name="name"]').value = ''
+  document.querySelector('input[name="phone"]').value = '';
+  document.querySelector('input[name="direction"]').value = '';
+  shadowContainer.classList.toggle('toggle-shadow-container')
+})
   document.getElementsByTagName('table')[0].addEventListener('click', event => {
       if (event.target.innerText == 'Modificar') {
           shadowContainer.classList.toggle('toggle-shadow-container')
@@ -111,7 +168,19 @@
           document.querySelector('input[name="direction"]').value = event.target.getAttribute('value-direction')
       }
   })
-
 </script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+  <script type="text/javascript">
+    $(document).ready(function () {
+        $(".alert-dismissible").fadeTo(2000, 500).slideUp(500, function(){
+            $(".alert-dismissible").alert('close');
+        });
+        $('[data-toggle="tooltip"]').tooltip({
+            trigger : 'hover'
+        });
+    });
+  </script>
+<script>
 
 @endpush

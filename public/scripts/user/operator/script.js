@@ -1,15 +1,19 @@
-document.getElementsByTagName('table')[0].addEventListener('click', event => {
-  if(event.target.innerText == 'Borrar') {
-    console.log('ga')
-    const id = event.target.getAttribute('value-id')
 
-    fetch('/api/deleteClient/' + id, {
-      method: 'delete'
-    }).then(response => {
-      window.location.reload()
-    })
+document.getElementsByTagName('table')[0].addEventListener('click', event => {
+  if (event.target.innerText == 'Borrar') {
+    // Mostrar un cuadro de diálogo de confirmación
+    if (confirm('¿Estás seguro de que deseas eliminar este registro?')) {
+      const id = event.target.getAttribute('value-id');
+
+      fetch('/api/deleteClient/' + id, {
+        method: 'delete'
+      }).then(response => {
+        window.location.reload();
+      });
+    }
   }
-})
+});
+
 
 document.getElementsByTagName('table')[0].addEventListener('click', event => {
   if (event.target.getAttribute('value-rol') == 'operator') {

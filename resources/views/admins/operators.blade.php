@@ -19,7 +19,7 @@
         @csrf
         <button type ="button"class="close-shadow-container button" id="closeButton">Cerrar</button>
         <hr/>
-        <input name="id" type="text" value="" placeholder="id" hidden/>
+        <input name="id" type="text" value="{{ old('id') }}" placeholder="id" hidden/>
 
         <div class="formulario-campo">
           <label for="name">Nombre</label>
@@ -90,7 +90,6 @@
         {{ session('borrado') }}
       </div>
     @endif
-    @include('components.notify', ['ok' => 'Cambios hechos', 'error' => 'Cambios no hechos'])
     
     <div class="sub-container">
       <table>

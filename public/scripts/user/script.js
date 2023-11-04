@@ -29,6 +29,7 @@ openShadowContainerOperator.addEventListener('click', () => {
 })
 
 
+
 document.getElementsByTagName('table')[0].addEventListener('click', event => {
   event.preventDefault();
 

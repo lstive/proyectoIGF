@@ -92,7 +92,7 @@ class AdminController extends Controller
             $customMessages['password.regex'] = 'La contraseña debe contener al menos una minúscula, una mayúscula, un número, un carácter especial y tener una longitud entre 8 y 15 caracteres.';
             $customMessages['password.required'] = 'Ingrese una contraseña';
 
-            $input = [
+            /*$input = [
                 request()->get('name'),
                 request()->get('email'),
                 request()->get('password'),
@@ -102,7 +102,7 @@ class AdminController extends Controller
                 if($value == '' | $value == null) {
                     return redirect(route('admins.operators', ['ok' => -1]))->with('actualizacion', 'Operador  exitosamente'); //Cuando entra?
                 }
-            }
+            }*/
             
             $user = new User;
             $user->name = request()->get('name');
@@ -113,6 +113,8 @@ class AdminController extends Controller
             $this->validate($request, $rules, $customMessages);
             $user->save();
         }else {
+
+            /*
             $input = [
                 request()->get('name'),
                 request()->get('email'),
@@ -122,7 +124,7 @@ class AdminController extends Controller
                 if($value == '' | $value == null) {
                     return redirect(route('admins.operators', ['ok' => -1]))->with('actualizacion', 'Operador Actualizado exitosamente');
                 }
-            }
+            }*/
             
             $user = User::find(request()->get('id'));
             $user->name = request()->get('name');
@@ -206,17 +208,11 @@ class AdminController extends Controller
                 $customMessages['password.regex'] = 'La contraseña debe contener al menos una minúscula, una mayúscula, un número, un carácter especial y tener una longitud entre 8 y 15 caracteres.';
                 $customMessages['password.required'] = 'Ingrese una contraseña';
                 $user->password = bcrypt($request->get('password'));
-
-                // Realiza la validación utilizando las reglas definidas y la instancia de Request
-                $this->validate($request, $rules, $customMessages);
-                $user->save();
-                return redirect(route('admins.drivers', ['ok' => 1]))->with('actualizacion', 'Taxista actualizado exitosamente');
             }
 
             // Realiza la validación utilizando las reglas definidas y la instancia de Request
             $this->validate($request, $rules, $customMessages);
             $user->save();
-
             return redirect(route('admins.drivers', ['ok' => 1]))->with('actualizacion', 'Taxista actualizado exitosamente');
         }
         return redirect(route('admins.drivers', ['ok' => 1]))->with('registro', 'Taxista registrado exitosamente');
@@ -224,38 +220,59 @@ class AdminController extends Controller
     
 
     public function addClient() {
-        $input = [
+       /* $input = [
             request()->get('name'),
             request()->get('phone'),
             request()->get('direction'),
+        ];*/
+        $request = request();
+    
+        // Define las reglas de validación para los campos del formulario
+        $rules = [
+            'name' => ['regex:/^[A-Za-z\- ]+$/','min:5','max:50'],
+            'phone' => ['regex:/^\d{8}$/','required',Rule::unique('clientes', 'phone')->ignore($request->id)],
+            'direction' => 'required|string|min:15|max:100',
         ];
-
-        foreach($input as $value) {
+    
+        // Define mensajes personalizados para las reglas de validación
+        $customMessages = [
+            'name.regex' => 'Ingrese solo caracteres validos',
+            'name.min' => 'El campo nombre debe tener al menos 5 caracteres.',
+            'name.max' => 'El campo nombre no debe exceder los 50 caracteres.',
+            'phone.regex' => 'Ingrese un número de teléfono válido (8 dígitos).',
+            'phone.unique'=>'Este telefono se encuentra en uso',
+            'direction.min' => 'El campo direccion debe tener al menos 15 caracteres.',
+            'direction.max' => 'El campo direccion no debe exceder los 100 caracteres.'
+        ];
+        /*foreach($input as $value) {
             if($value == '' | $value == null) {
                 return redirect(route('operators.clients', ['ok' => -1]));
             }
-        }
+        }*/
         
         if(!request()->get('id')) {
             $user = new Cliente;
             $user->name = request()->get('name');
             $user->phone = request()->get('phone');
             $user->direction = request()->get('direction');
+            $this->validate($request, $rules, $customMessages);
             $user->save();
         }else {
             $user = Cliente::find(request()->get('id'));
             $user->name = request()->get('name');
             $user->phone = request()->get('phone');
             $user->direction = request()->get('direction');
+            $this->validate($request, $rules, $customMessages);
             $user->save();
+            return redirect(route('operators.clients', ['ok' => 1]))->with('actualizacion', 'Cliente actualizado exitosamente');
         }
         
-        return redirect(route('operators.clients', ['ok' => 1]));
+        return redirect(route('operators.clients', ['ok' => 1]))->with('registro', 'Cliente registrado exitosamente');
     }
 
     public function destroyClient($id) {
         Cliente::destroy($id);
-        return redirect(route('operators.clients', ['ok' => 1]));
+        return redirect(route('operators.clients', ['ok' => 1]))->with('borrado', 'Cliente eliminado exitosamente');
     }
 
     // filter

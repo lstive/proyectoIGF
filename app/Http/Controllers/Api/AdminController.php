@@ -63,12 +63,35 @@ class AdminController extends Controller
     }*/
 
     public function destroyOperator(string $id) {
+
         User::destroy($id);
-        return redirect(route('admins.operators', ['ok' => 1]));
+        return redirect(route('admins.operators', ['ok' => 1]))->with('borrado', 'Taxista eliminado exitosamente');
     }
 
     public function addOperator() {
+        $request = request();
+        $rules = [
+            'name' => ['regex:/^[A-Za-z\- ]+$/','min:5','max:50'],
+            'email' => ['required', 'email', Rule::unique('users', 'email')->ignore($request->id)],
+            
+        ];
+    
+        // Define mensajes personalizados para las reglas de validación
+        $customMessages = [
+            'name.regex' => 'Ingrese solo caracteres validos',
+            'name.min' => 'El campo nombre debe tener al menos 5 caracteres.',
+            'name.max' => 'El campo nombre no debe exceder los 50 caracteres.',
+            'email' => 'El campo debe ser una dirección de correo electrónico válida.',
+            'email.unique'=>'Este correo electronico esta en uso',
+        ];    
+
+
         if(!request()->get('id')) {
+
+            $rules['password'] = 'required|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,15}$/';
+            $customMessages['password.regex'] = 'La contraseña debe contener al menos una minúscula, una mayúscula, un número, un carácter especial y tener una longitud entre 8 y 15 caracteres.';
+            $customMessages['password.required'] = 'Ingrese una contraseña';
+
             $input = [
                 request()->get('name'),
                 request()->get('email'),
@@ -77,7 +100,7 @@ class AdminController extends Controller
 
             foreach($input as $value) {
                 if($value == '' | $value == null) {
-                    return redirect(route('admins.operators', ['ok' => -1]));
+                    return redirect(route('admins.operators', ['ok' => -1]))->with('actualizacion', 'Operador  exitosamente'); //Cuando entra?
                 }
             }
             
@@ -86,6 +109,8 @@ class AdminController extends Controller
             $user->email = request()->get('email');
             $user->rol = 'operator';
             $user->password = bcrypt(request()->get('password'));
+
+            $this->validate($request, $rules, $customMessages);
             $user->save();
         }else {
             $input = [
@@ -95,7 +120,7 @@ class AdminController extends Controller
 
             foreach($input as $value) {
                 if($value == '' | $value == null) {
-                    return redirect(route('admins.operators', ['ok' => -1]));
+                    return redirect(route('admins.operators', ['ok' => -1]))->with('actualizacion', 'Operador Actualizado exitosamente');
                 }
             }
             
@@ -104,18 +129,22 @@ class AdminController extends Controller
             $user->email = request()->get('email');
             $user->rol = 'operator';
             if(request()->get('password') != '') {
+                $rules['password'] = 'required|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,15}$/';
+                $customMessages['password.regex'] = 'La contraseña debe contener al menos una minúscula, una mayúscula, un número, un carácter especial y tener una longitud entre 8 y 15 caracteres.';
+                $customMessages['password.required'] = 'Ingrese una contraseña';
                 $user->password = bcrypt(request()->get('password'));
             }
-            
+            $this->validate($request, $rules, $customMessages);
             $user->save();
+            return redirect(route('admins.operators', ['ok' => 1]))->with('actualizacion', 'Operador Actualizado exitosamente');
         }
         
-        return redirect(route('admins.operators', ['ok' => 1]));
+        return redirect(route('admins.operators', ['ok' => 1]))->with('registro', 'Operador registrado exitosamente');
     }
 
     public function destroyDriver(string $id) {
         Taxista::destroy($id);
-        return redirect(route('admins.drivers', ['ok' => 1]))->with('borrado', 'Taxista eliminado exitosamente');;
+        return redirect(route('admins.drivers', ['ok' => 1]))->with('borrado', 'Taxista eliminado exitosamente');
     }
 
     public function addDriver() {
@@ -124,11 +153,11 @@ class AdminController extends Controller
     
         // Define las reglas de validación para los campos del formulario
         $rules = [
-            'name' => ['required|regex:/^[A-Za-z\- ]+$/','min:5','max:50'],
+            'name' => ['regex:/^[A-Za-z\- ]+$/','min:5','max:50'],
             'email' => ['required', 'email', Rule::unique('taxistas', 'email')->ignore($request->id)],
             'phone' => ['regex:/^\d{8}$/','required',Rule::unique('taxistas', 'phone')->ignore($request->id)],
             'license' => ['regex:/^\d{14}$/',Rule::unique('taxistas', 'license')->ignore($request->id)],
-            'direction' => 'required|string|min:5|max:100',
+            'direction' => 'required|string|min:15|max:100',
         ];
     
         // Define mensajes personalizados para las reglas de validación

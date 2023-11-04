@@ -23,13 +23,15 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::middleware(['web', 'auth'])->group(function () {
   Route::post('/addDriver', [AdminController::class, 'addDriver']);
   Route::delete('/deleteDriver/{id}', [AdminController::class, 'destroyDriver']);
+  Route::post('/addOperator', [AdminController::class, 'addOperator']);
+  Route::delete('/deleteOperator/{id}', [AdminController::class, 'destroyOperator']);
   
 });
 
 
 Route::get('/getOperators', [AdminController::class, 'getOperators']);
-Route::delete('/deleteOperator/{id}', [AdminController::class, 'destroyOperator']);
-Route::post('/addOperator', [AdminController::class, 'addOperator']);
+//Route::delete('/deleteOperator/{id}', [AdminController::class, 'destroyOperator']);
+//Route::post('/addOperator', [AdminController::class, 'addOperator']);
 
 Route::get('/getDrivers', [AdminController::class, 'getDrivers']);
 //Route::delete('/deleteDriver/{id}', [AdminController::class, 'destroyDriver']);

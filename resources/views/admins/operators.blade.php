@@ -17,12 +17,41 @@
     <div class="form-container">
       <form method="post" action="/api/addOperator">
         @csrf
-        <button class="close-shadow-container button">Cerrar</button>
+        <button type ="button"class="close-shadow-container button" id="closeButton">Cerrar</button>
         <hr/>
-        <input name="id" type="text" value="" placeholder="id" hidden/><br/>
-        <input name="name" type="text" value="" placeholder="Nombre"/><br/>
-        <input name="email" type="text" value="" placeholder="Email"/><br/>
-        <input name="password" type="text" value="" placeholder="Contraseña"/><br/>
+        <input name="id" type="text" value="" placeholder="id" hidden/>
+
+        <div class="formulario-campo">
+          <label for="name">Nombre</label>
+          <input name="name" type="text" value="{{ old('name') }}" id="name" placeholder="Nombre" required/>
+          @error('name')
+            <small style="color: red;">{{ $message }}</small>
+          @enderror
+        </div>
+
+        <div class="formulario-campo">
+          <label for="email">Email</label>
+          <input name="email" type="text" value="{{ old('email') }}" id="email" placeholder="Email" required/>
+          @error('email')
+            <small style="color: red;">{{ $message }}</small>
+          @enderror
+        </div>
+
+        <div class="formulario-campo" id="changePasswordField" style="display: none;">
+          <input type="checkbox" id="changePassword" name="changePassword" {{ old('changePassword') ? 'checked' : '' }}>
+          <label for="changePassword">Cambiar contraseña</label>
+        </div>
+
+        <div class="formulario-campo" id = "password-div">
+          <div style="display: flex;">
+            <input name="password" type="password" value="" id="password" placeholder="Contraseña"/>
+            <button type="button" id="showPassword">Mostrar</button>
+          </div>
+          @error('password')
+            <small style="color: red;">{{ $message }}</small>
+          @enderror
+        </div>
+
         <div>
           <input name="" type="submit" value="Agregar"/>
           <input name="" type="submit" value="Guardar cambios"/>
@@ -44,9 +73,23 @@
   <div class="right-container">
 
     <div class="sub-container" style="top: 0px; position: sticky;">
-      <button class="open-shadow-container button">Agregar nuevo</button>
+      <button class="open-shadow-container-operator button">Agregar nuevo</button>
     </div>
-
+    @if(session('registro'))
+      <div class="sub-container alert-dismissible fade show" role="alert" style="background-color: #28a745; color: #fff; padding: 10px; border-radius: 4px;">
+        {{ session('registro') }}
+      </div>
+    @endif
+    @if(session('actualizacion'))
+      <div class="sub-container alert-dismissible fade show" role="alert" style="background-color: #007BFF; color: #fff;" padding: 10px; border-radius: 4px;">
+        {{ session('actualizacion') }}
+      </div>
+    @endif
+    @if(session('borrado'))
+      <div class="sub-container alert-dismissible fade show" role="alert" style="background-color: #FF6B6B; color: #fff;" padding: 10px; border-radius: 4px;">
+        {{ session('borrado') }}
+      </div>
+    @endif
     @include('components.notify', ['ok' => 'Cambios hechos', 'error' => 'Cambios no hechos'])
     
     <div class="sub-container">
@@ -80,15 +123,74 @@
 @endsection
 
 @push('scripts')
+
+@if(count($errors) > 0)
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const shadowContainer = document.getElementsByClassName('shadow-container')[0]
+            if(document.querySelector('input[name="id"]').value ===''){
+              document.getElementById('changePasswordField').style.display = 'none';
+              document.getElementById('changePassword').checked = true;
+              document.getElementById('password-div').style.display = 'block'
+            }
+            else {
+              document.getElementById('changePasswordField').style.display = 'block';
+            }
+            shadowContainer.classList.add('toggle-shadow-container')
+        });
+    </script>
+  @endif
+
+  
 <script src="/scripts/user/script.js"></script>
 <script>
-  document.addEventListener('DOMContentLoaded', event => {
-      document.getElementsByClassName('notify')[0].classList.toggle('notify-show')
-      setTimeout(() => {
-          if(document.getElementsByClassName('notify')[0].innerText != ' x ') {
-              document.getElementsByClassName('notify')[0].classList.toggle('notify-show')
-          }
-      }, 4000)
-  })
+  </script>
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+  <script type="text/javascript">
+    $(document).ready(function () {
+        $(".alert-dismissible").fadeTo(2000, 500).slideUp(500, function(){
+            $(".alert-dismissible").alert('close');
+        });
+        $('[data-toggle="tooltip"]').tooltip({
+            trigger : 'hover'
+        });
+    });
+  </script>
+<script>
+const closeButton = document.getElementById('closeButton');
+
+// Agrega un evento de clic al botón
+closeButton.addEventListener('click', function() {
+  
+  document.querySelector('input[name="password"]').value = '';
+  shadowContainer.classList.toggle('toggle-shadow-container');
+  
+});
+
+
+const passwordField = document.getElementById('password');
+    const showPasswordButton = document.getElementById('showPassword');
+
+    showPasswordButton.addEventListener('click', function () {
+        if (passwordField.type === 'password') {
+            passwordField.type = 'text';
+            showPasswordButton.textContent = 'Ocultar';
+        } else {
+            passwordField.type = 'password';
+            showPasswordButton.textContent = 'Mostrar';
+        }
+    });
+
+    const changePasswordCheckbox = document.getElementById('changePassword')
+    changePasswordCheckbox.addEventListener('change', function() {
+
+        if (this.checked) {
+            document.getElementById('password-div').style.display = 'block'
+        } else {
+            // Si el checkbox no está seleccionado, oculta el campo de contraseña
+            document.getElementById('password-div').style.display = 'none'
+        }
+    });
+</script>
 </script>
 @endpush

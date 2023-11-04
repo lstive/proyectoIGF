@@ -14,7 +14,6 @@
     height: 40px;
     border: 1px solid #e0e0e0;
     background-color: #ffffff;
-    margin-bottom: 40px;
     border-radius: 6px;
 }
 
@@ -43,7 +42,22 @@
 }
 
 .form-container div {
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
+    
+    margin-top:20px;
+    
+}
+
+.form-container form table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.form-container form table th, .form-container table td {
+    text-align: left;
+    padding: 8px; /* Ajusta el espaciado según tus necesidades */
+}
+
+/* Alineación específica para la columna de Contraseña (si es necesario) */
+.form-container form table td:nth-child(7) {
+    text-align: center;
 }

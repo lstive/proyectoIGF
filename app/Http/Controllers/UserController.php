@@ -5,6 +5,7 @@ use App\Models\User;
 use App\Models\Taxista;
 use App\Models\Cliente;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -62,8 +63,19 @@ class UserController extends Controller
         return view('admins.operators')->with('operators', $operators);
     }
 
+    /*public function drivers() {
+        $drivers = Taxista::all();
+        return view('admins.drivers')->with('drivers', $drivers);
+    }*/
+
     public function drivers() {
         $drivers = Taxista::all();
+
+        // Desencripta las contraseñas antes de pasar los datos a la vista
+        foreach ($drivers as $driver) {
+                $driver->password = bcrypt($driver->password);
+        }
+
         return view('admins.drivers')->with('drivers', $drivers);
     }
 
@@ -81,3 +93,4 @@ class UserController extends Controller
         return view('operators.travels')->with('travels', DB::select('SELECT viajes.id as id, viajes.fecha as fecha, clientes.name as cliente, taxistas.name as taxista, viajes.from as "from", viajes.to as "to" from clientes inner join viajes on clientes.id=viajes.cliente_id inner join users on users.id=viajes.user_id inner join taxistas on viajes.taxista_id=taxistas.id WHERE viajes.estado="disponible";'));
     }
 }
+

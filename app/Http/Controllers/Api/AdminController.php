@@ -56,9 +56,9 @@ class AdminController extends Controller
         return User::all()->where('rol', 'operator')->count();
     }
 
-    public function getDrivers() {
+    /*public function getDrivers() {
         return Taxista::all()->count();
-    }
+    }*/
 
     public function destroyOperator(string $id) {
         User::destroy($id);
@@ -113,64 +113,82 @@ class AdminController extends Controller
 
     public function destroyDriver(string $id) {
         Taxista::destroy($id);
-        return redirect(route('admins.drivers', ['ok' => 1]));
+        return redirect(route('admins.drivers', ['ok' => 1]))->with('borrado', 'Taxista eliminado exitosamente');;
     }
 
     public function addDriver() {
-        if(!request()->get('id')) {
-            $input = [
-                request()->get('name'),
-                request()->get('email'),
-                request()->get('phone'),
-                request()->get('license'),
-                request()->get('direction'),
-                request()->get('password'),
-            ];
+        // Accede a la instancia de Request para obtener los datos del formulario
+        $request = request();
+    
+        // Define las reglas de validación para los campos del formulario
+        $rules = [
+            'name' => 'required|string|min:5|max:100',
+            'email' => 'required | email',
+            'phone' => 'regex:/^\d{8}$/',
+            'license' => 'regex:/^\d{14}$/',
+            'direction' => 'required|string|min:5|max:100',
+        ];
+    
+        // Define mensajes personalizados para las reglas de validación
+        $customMessages = [
+            'name.min' => 'El campo nombre debe tener al menos 5 caracteres.',
+            'name.max' => 'El campo nombre no debe exceder los 50 caracteres.',
+            'email' => 'El campo debe ser una dirección de correo electrónico válida.',
+            'phone.regex' => 'Ingrese un número de teléfono válido (exactamente 8 dígitos).',
+            'license.regex' => 'Ingrese un número de licencia valido',
+            'direction.min' => 'El campo direction debe tener al menos 15 caracteres.',
+            'direction.max' => 'El campo direction no debe exceder los 100 caracteres.',
+        ];
+    
+        if (!$request->get('id')) {
+            // Resto de tu lógica para agregar un taxista
 
-            foreach($input as $value) {
-                if($value == '' | $value == null) {
-                    return redirect(route('admins.drivers', ['ok' => -1]));
-                }
-            }
-            
+            $rules['password'] = 'required|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,15}$/';
+            $customMessages['password.regex'] = 'La contraseña debe contener al menos una minúscula, una mayúscula, un número, un carácter especial y tener una longitud entre 8 y 15 caracteres.';
+
             $user = new Taxista;
-            $user->name = request()->get('name');
-            $user->email = request()->get('email');
-            $user->phone = request()->get('phone');
-            $user->license = request()->get('license');
-            $user->direction = request()->get('direction');
-            $user->password = bcrypt(request()->get('password'));
-            $user->save();
-        }else {
-            $input = [
-                request()->get('name'),
-                request()->get('email'),
-                request()->get('phone'),
-                request()->get('license'),
-                request()->get('direction'),
-            ];
+            $user->name = $request->get('name');
+            $user->email = $request->get('email');
+            $user->phone = $request->get('phone');
+            $user->license = $request->get('license');
+            $user->direction = $request->get('direction');
+            $user->password = bcrypt($request->get('password'));
 
-            foreach($input as $value) {
-                if($value == '' | $value == null) {
-                    return redirect(route('admins.drivers', ['ok' => -1]));
-                }
-            }
-            
-            $user = Taxista::find(request()->get('id'));
-            $user->name = request()->get('name');
-            $user->email = request()->get('email');
-            $user->phone = request()->get('phone');
-            $user->license = request()->get('license');
-            $user->direction = request()->get('direction');
-            if(request()->get('password') != '') {
-                $user->password = bcrypt(request()->get('password'));
-            }
-            
+            // Realiza la validación utilizando las reglas definidas y la instancia de Request
+            $this->validate($request, $rules, $customMessages);
+
             $user->save();
+        } else {
+            // Resto de tu lógica para modificar un taxista
+            $user = Taxista::find($request->get('id'));
+            $user->name = $request->get('name');
+            $user->email = $request->get('email');
+            $user->phone = $request->get('phone');
+            $user->license = $request->get('license');
+            $user->direction = $request->get('direction');
+            if ($request->get('password') != '') {
+                $rules['password'] = 'required|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,15}$/';
+                $customMessages['password.regex'] = 'La contraseña debe contener al menos una minúscula, una mayúscula, un número, un carácter especial y tener una longitud entre 8 y 15 caracteres.';
+                $user->password = bcrypt($request->get('password'));
+
+                // Realiza la validación utilizando las reglas definidas y la instancia de Request
+                $this->validate($request, $rules, $customMessages);
+
+                $user->save();
+                return redirect(route('admins.drivers', ['ok' => 1]))->with('actualizacion', 'Taxista actualizado exitosamente');
+            }
+
+            // Realiza la validación utilizando las reglas definidas y la instancia de Request
+            $this->validate($request, $rules, $customMessages);
+            $user->save();
+
+            return redirect(route('admins.drivers', ['ok' => 1]))->with('actualizacion', 'Taxista actualizado exitosamente');
         }
+        return redirect(route('admins.drivers', ['ok' => 1]))->with('registro', 'Taxista registrado exitosamente');
+    
         
-        return redirect(route('admins.drivers', ['ok' => 1]));
     }
+    
 
     public function addClient() {
         $input = [

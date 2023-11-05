@@ -51,10 +51,13 @@
             <small style="color: red;">{{ $message }}</small>
           @enderror
         </div>
-
-        <div>
-          <input name="" type="submit" value="Agregar"/>
-          <input name="" type="submit" value="Guardar cambios"/>
+          <div>
+            <div style="display: none;" id ="btn-Agregar">
+            <input name="" type="submit" value="Agregar"/>
+          </div>
+          <div style="display: none;" id ='btn-Guardar'>
+            <input name="" type="submit" value="Guardar cambios" />
+          </div>
         </div>
       </form>
     </div>
@@ -93,7 +96,7 @@
     
     <div class="sub-container">
       <table>
-        <thead>
+        <thead style= "text-align: left;">
           <tr>
             <th>Id</th>
             <th>Nombre</th>

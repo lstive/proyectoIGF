@@ -12,7 +12,7 @@
 
 @section('content')
 <div class="container">
-  @include('components.notify', ['ok' => 'Exito al hacer cambios', 'error' => 'Error al hacer cambios'])
+  
   
   <!-- lateral -->
   <div class="left-container">
@@ -27,7 +27,13 @@
   <!-- lateral end -->
   
   <div class="right-container">
+  @if(session('registro'))
+      <div class="sub-container alert-dismissible fade show" role="alert" style="background-color: #28a745; color: #fff; padding: 10px; border-radius: 4px;">
+        {{ session('registro') }}
+      </div>
+    @endif
     <div class="sub-container">
+    
       <div class="interactive">
         <div id="map"></div>
       </div>
@@ -60,4 +66,15 @@
       }, 4000)
   })
 </script>
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+  <script type="text/javascript">
+    $(document).ready(function () {
+        $(".alert-dismissible").fadeTo(2000, 500).slideUp(500, function(){
+            $(".alert-dismissible").alert('close');
+        });
+        $('[data-toggle="tooltip"]').tooltip({
+            trigger : 'hover'
+        });
+    });
+  </script>
 @endpush

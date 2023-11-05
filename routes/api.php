@@ -27,6 +27,8 @@ Route::middleware(['web', 'auth'])->group(function () {
   Route::delete('/deleteOperator/{id}', [AdminController::class, 'destroyOperator']);
   Route::post('/addClient', [AdminController::class, 'addClient']);
   Route::delete('/deleteClient/{id}', [AdminController::class, 'destroyClient']);
+  Route::post('/addTravel', [AdminController::class, 'addTravel']);
+  Route::delete('/deleteTravel/{id}', [AdminController::class, 'destroyTravel']);
   
 });
 
@@ -45,8 +47,8 @@ Route::get('/getDrivers', [AdminController::class, 'getDrivers']);
 Route::post('/filterClients', [AdminController::class, 'filterClients']);
 Route::post('/filterDrivers', [AdminController::class, 'filterDrivers']);
 
-Route::post('/addTravel', [AdminController::class, 'addTravel']);
-Route::delete('/deleteTravel/{id}', [AdminController::class, 'destroyTravel']);
+//Route::post('/addTravel', [AdminController::class, 'addTravel']);
+
 
 Route::post('/driveBegin', [DriverController::class, 'driveBegin']);
 Route::post('/driveEnd', [DriverController::class, 'driveEnd']);

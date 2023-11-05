@@ -58,9 +58,9 @@ class AdminController extends Controller
         return User::all()->where('rol', 'operator')->count();
     }
 
-    /*public function getDrivers() {
+    public function getDrivers() {
         return Taxista::all()->count();
-    }*/
+    }
 
     public function destroyOperator(string $id) {
 
@@ -92,18 +92,6 @@ class AdminController extends Controller
             $customMessages['password.regex'] = 'La contraseña debe contener al menos una minúscula, una mayúscula, un número, un carácter especial y tener una longitud entre 8 y 15 caracteres.';
             $customMessages['password.required'] = 'Ingrese una contraseña';
 
-            /*$input = [
-                request()->get('name'),
-                request()->get('email'),
-                request()->get('password'),
-            ];
-
-            foreach($input as $value) {
-                if($value == '' | $value == null) {
-                    return redirect(route('admins.operators', ['ok' => -1]))->with('actualizacion', 'Operador  exitosamente'); //Cuando entra?
-                }
-            }*/
-            
             $user = new User;
             $user->name = request()->get('name');
             $user->email = request()->get('email');
@@ -114,17 +102,6 @@ class AdminController extends Controller
             $user->save();
         }else {
 
-            /*
-            $input = [
-                request()->get('name'),
-                request()->get('email'),
-            ];
-
-            foreach($input as $value) {
-                if($value == '' | $value == null) {
-                    return redirect(route('admins.operators', ['ok' => -1]))->with('actualizacion', 'Operador Actualizado exitosamente');
-                }
-            }*/
             
             $user = User::find(request()->get('id'));
             $user->name = request()->get('name');
@@ -244,11 +221,6 @@ class AdminController extends Controller
             'direction.min' => 'El campo direccion debe tener al menos 15 caracteres.',
             'direction.max' => 'El campo direccion no debe exceder los 100 caracteres.'
         ];
-        /*foreach($input as $value) {
-            if($value == '' | $value == null) {
-                return redirect(route('operators.clients', ['ok' => -1]));
-            }
-        }*/
         
         if(!request()->get('id')) {
             $user = new Cliente;
@@ -285,25 +257,34 @@ class AdminController extends Controller
     }
 
     public function addTravel() {
-        $input = [
-            request()->get('user_id'),
-            request()->get('client-id'),
-            request()->get('driver-id'),
-            request()->get('from'),
-            request()->get('from-coords'),
-            request()->get('to'),
-            request()->get('to-coords'),
-            request()->get('indications'),
-            request()->get('price'),
-            request()->get('number'),
-            request()->get('date'),
+        $request = request();
+    
+        // Define las reglas de validación para los campos del formulario
+        $rules = [
+            
+            'from'=>['required'],
+            'to'=>['required'],
+            'indications'=>['max:255'],
+            'number'=>['required','int','min:1','max:4'],
+            'date' => 'required|after:' . now(),
+            'price'=>['required','regex:/^\d+(\.\d{1,2})?$/'],
+        ];
+    
+        // Define mensajes personalizados para las reglas de validación
+        $customMessages = [
+            'price.regex'=>'Ingrese un valor valido para el precio',
+            'price.required' => 'Ingrese un precio para el viaje',
+            'number'=>'Ingresar el numero de pasajeros',
+            'number.int'=> 'Ingresar un numero valido de pasajeros',
+            'number.min'=> 'El numero de pasajeros minimos es 1',
+            'number.max'=>  'El numero de pasajeros maximo es 4',
+            'from.required'=> 'Por favor indique el punto de origen del viaje',
+            'to.required'=> 'Por favor indique el punto de llegada del viaje',
+            'indications.max'=> 'El valor maximo es de 255 caracteres',
+            'date.required'=>'Ingrese una fecha para el viaje',
+            'date.after'=>'La fecha ingresada no es valida',
         ];
 
-        foreach($input as $value) {
-            if($value == '' | $value == null) {
-                return redirect(route('operators.trips', ['ok' => -1]));
-            }
-        }
         
         $viaje = new Viaje;
         $viaje->user_id = request()->get('user_id');
@@ -318,13 +299,16 @@ class AdminController extends Controller
         $viaje->passengers = request()->get('number');
         $viaje->fecha = request()->get('date');
         $viaje->estado = 'disponible';
+        
+        $this->validate($request, $rules, $customMessages);
+        
         $viaje->save();
 
-        return redirect(route('operators.trips', ['ok' => 1]));
+        return redirect(route('operators.trips', ['ok' => 1]))->with('registro','Viaje registrado exitosamente');
     }
 
     public function destroyTravel($id) {
         Viaje::destroy($id);
-        return $id;
+        return redirect(route('operators.travels', ['ok' => 1]))->with('borrado','Viaje eliminado exitosamente');
     }
 }

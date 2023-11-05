@@ -42,8 +42,12 @@
           @enderror
         </div>
         <div>
-          <input name="" type="submit" value="Agregar"/>
-          <input name="" type="submit" value="Guardar cambios"/>
+        <div style="display: none;" id ="btn-Agregar">
+            <input name="" type="submit" value="Agregar"/>
+          </div>
+          <div style="display: none;" id ='btn-Guardar'>
+            <input name="" type="submit" value="Guardar cambios" />
+          </div>
         </div>
       </form>
     </div>
@@ -81,7 +85,7 @@
 
     <div class="sub-container">
       <table>
-        <thead>
+        <thead style = "text-align: left;">
           <tr>
             <th>Id</th>
             <th>Nombre</th>
@@ -127,6 +131,7 @@
   document.getElementsByTagName('table')[0].addEventListener('click', event => {
       if (event.target.getAttribute('value-rol') == 'operator') {
           if (event.target.innerText == 'Modificar') {
+              
               console.log('gaaaaa')
               shadowContainer.classList.toggle('toggle-shadow-container')
               document.querySelector('input[name="id"]').value = event.target.getAttribute('value-id')
@@ -152,7 +157,8 @@ closeButton.addEventListener('click', function() {
 const openShadowContainerClient = document.getElementsByClassName('open-shadow-container-client')[0]
 openShadowContainerClient.addEventListener('click', () => {
   
-  //document.getElementById('changePasswordField').style.display = 'none';
+  document.getElementById('btn-Guardar').style.display = 'none'
+  document.getElementById('btn-Agregar').style.display = 'block'
   document.querySelector('input[name="id"]').value = '';
   document.querySelector('input[name="name"]').value = ''
   document.querySelector('input[name="phone"]').value = '';

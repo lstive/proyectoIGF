@@ -63,19 +63,8 @@ class UserController extends Controller
         return view('admins.operators')->with('operators', $operators);
     }
 
-    /*public function drivers() {
-        $drivers = Taxista::all();
-        return view('admins.drivers')->with('drivers', $drivers);
-    }*/
-
     public function drivers() {
         $drivers = Taxista::all();
-
-        // Desencripta las contraseñas antes de pasar los datos a la vista
-        foreach ($drivers as $driver) {
-                $driver->password = bcrypt($driver->password);
-        }
-
         return view('admins.drivers')->with('drivers', $drivers);
     }
 

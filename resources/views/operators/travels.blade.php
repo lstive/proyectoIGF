@@ -20,6 +20,11 @@
   </div>
   
   <div class="right-container">
+    @if(session('borrado'))
+      <div class="sub-container alert-dismissible fade show" role="alert" style="background-color: #FF6B6B; color: #fff;" padding: 10px; border-radius: 4px;">
+        {{ session('borrado') }}
+      </div>
+    @endif
     <div class="sub-container">
       <table>
         <thead>
@@ -55,18 +60,31 @@
 
 @push('scripts')
 <script>
-  document.getElementsByTagName('button')[0].addEventListener('click', event => {
-      event.preventDefault()
-      if(event.target.innerText == 'Borrar') {
-          (async () => {
-              const res = await fetch('/api/deleteTravel/' + event.target.getAttribute('value-id'), {
-                  method: 'delete'
-              })
-
-              window.location.reload()
-          })()
+  document.getElementsByTagName('table')[0].addEventListener('click', event => {
+    event.preventDefault();
+    if (event.target.innerText == 'Borrar') {
+      const confirmDelete = confirm('¿Estás seguro de que deseas eliminar este registro?');
+      if (confirmDelete) {
+        (async () => {
+          const res = await fetch('/api/deleteTravel/' + event.target.getAttribute('value-id'), {
+            method: 'delete'
+          });
+          window.location.reload();
+        })();
       }
-  })
+    }
+  });
 </script>
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+  <script type="text/javascript">
+    $(document).ready(function () {
+        $(".alert-dismissible").fadeTo(2000, 500).slideUp(500, function(){
+            $(".alert-dismissible").alert('close');
+        });
+        $('[data-toggle="tooltip"]').tooltip({
+            trigger : 'hover'
+        });
+    });
+  </script>
 
 @endpush

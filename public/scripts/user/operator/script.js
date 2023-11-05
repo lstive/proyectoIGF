@@ -16,8 +16,12 @@ document.getElementsByTagName('table')[0].addEventListener('click', event => {
 
 
 document.getElementsByTagName('table')[0].addEventListener('click', event => {
+  document.getElementById('btn-Agregar').style.display = 'none'
+      document.getElementById('btn-Guardar').style.display = 'block'
   if (event.target.getAttribute('value-rol') == 'operator') {
+    
     if (event.target.innerText == 'Modificar') {
+      
       shadowContainer.classList.toggle('toggle-shadow-container')
       document.querySelector('input[name="id"]').value = event.target.getAttribute('value-id')
       document.querySelector('input[name="name"]').value = event.target.getAttribute('value-name')

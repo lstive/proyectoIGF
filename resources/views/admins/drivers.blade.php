@@ -9,7 +9,7 @@
 
 @section('content')
 <div class="container">
-  @include('components.notify', ['ok' => 'Exito al hacer cambios', 'error' => 'Error al hacer cambios'])
+  
 
   <!-- form -->
   <div class="shadow-container">
@@ -77,8 +77,12 @@
         @enderror
       </div>
       <div>
-        <input name="" type="submit" value="Agregar" />
-        <input name="" type="submit" value="Guardar cambios" />
+        <div style="display: none;" id ="btn-Agregar">
+          <input name="" type="submit" value="Agregar"/>
+        </div>
+        <div style="display: none;" id ='btn-Guardar'>
+          <input name="" type="submit" value="Guardar cambios" />
+        </div>
       </div>
     </form>
   </div>
@@ -173,7 +177,8 @@
       event.preventDefault()
       
       if (event.target.innerText === 'Modificar') { 
-          
+          document.getElementById('btn-Agregar').style.display = 'none'
+          document.getElementById('btn-Guardar').style.display = 'block'
           document.getElementById('changePasswordField').style.display = 'block'
           document.querySelector('input[name="id"]').value = event.target.getAttribute('value-id')
           document.querySelector('input[name="name"]').value = event.target.getAttribute('value-name')

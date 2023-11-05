@@ -10,6 +10,14 @@
     border: 1px solid #e0e0e0;
     background-color: #ffffff;
     border-radius: 6px;
+    margin-bottom: 15px;
+}
+.trips-form input[type="number"] {
+    width: 100%;
+    height: 40px;
+    border: 1px solid #e0e0e0;
+    background-color: #ffffff;
+    border-radius: 6px;
 }
 
 .trips-form select {
@@ -18,8 +26,8 @@
     border: 1px solid #e0e0e0;
     background-color: #ffffff;
     border-radius: 6px;
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin-right:20px;
+    
 }
 
 .trips-form textarea {
@@ -36,6 +44,7 @@
     border: 1px solid #e0e0e0;
     background-color: #ffffff;
     border-radius: 6px;
+    
 }
 
 .trips-form input[type="submit"] {

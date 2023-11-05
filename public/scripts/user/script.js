@@ -3,8 +3,11 @@ const openShadowContainerOperator = document.getElementsByClassName('open-shadow
 const closeShadowContainer = document.getElementsByClassName('close-shadow-container')[0]
 const shadowContainer = document.getElementsByClassName('shadow-container')[0]
 
+
 openShadowContainer.addEventListener('click', () => {
     
+    document.getElementById('btn-Guardar').style.display = 'none'
+    document.getElementById('btn-Agregar').style.display = 'block'
     document.getElementById('changePasswordField').style.display = 'none';
     document.querySelector('input[name="id"]').value = '';
     document.querySelector('input[name="name"]').value = '';
@@ -15,10 +18,13 @@ openShadowContainer.addEventListener('click', () => {
     shadowContainer.classList.toggle('toggle-shadow-container')
     document.getElementById('changePassword').checked = true;
     document.getElementById('password-div').style.display = 'block'
+    
 })
 
 openShadowContainerOperator.addEventListener('click', () => {
   
+  document.getElementById('btn-Guardar').style.display = 'none'
+  document.getElementById('btn-Agregar').style.display = 'block'
   document.getElementById('changePasswordField').style.display = 'none';
   document.querySelector('input[name="id"]').value = '';
   document.querySelector('input[name="name"]').value = '';
@@ -54,15 +60,13 @@ document.getElementsByTagName('table')[0].addEventListener('click', event => {
   }
 });
 
-
-
-
 document.getElementsByTagName('table')[0].addEventListener('click', event => {
   event.preventDefault()
-
+  
   if (event.target.getAttribute('value-rol') == 'operator') {
     if (event.target.innerText == 'Modificar') {
-      
+      document.getElementById('btn-Agregar').style.display = 'none'
+      document.getElementById('btn-Guardar').style.display = 'block'
       document.getElementById('changePasswordField').style.display = 'block'
       document.querySelector('input[name="id"]').value = event.target.getAttribute('value-id')
       document.querySelector('input[name="name"]').value = event.target.getAttribute('value-name')

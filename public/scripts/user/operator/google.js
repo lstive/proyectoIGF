@@ -84,7 +84,9 @@ function geocode(request) {
 
       req = JSON.parse(JSON.stringify(result, null, 2))
       add = req.results[0].geometry.location
-      add_2 = req.results[0].address_components[1].long_name + ", " + req.results[0].address_components[2].long_name + ", " + req.results[0].address_components[3].long_name
+      
+      //add_2 = req.results[0].address_components[1].long_name + ", " + req.results[0].address_components[2].long_name + ", " + req.results[0].address_components[3].long_name
+      add_2 = " "+req.results[0].formatted_address
       return results;
     })
     .catch((e) => {
@@ -96,12 +98,14 @@ document.getElementById('btn-add-origin').addEventListener('click', event => {
   event.preventDefault()
   document.querySelector('input[name="from-coords"]').value = JSON.stringify(add)
   document.querySelector('input[name="from"]').value = add_2
+  console.log(response)
 })
 
 document.getElementById('btn-add-destination').addEventListener('click', event => {
   event.preventDefault()
   document.querySelector('input[name="to-coords"]').value = JSON.stringify(add)
   document.querySelector('input[name="to"]').value = add_2
+  console.log(req.results)
 })
 
 document.getElementById('btn-filter-clients').addEventListener('click', event => {

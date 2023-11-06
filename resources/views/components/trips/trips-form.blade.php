@@ -35,7 +35,7 @@
       </div>
       <div style ="width: 33%; margin-right:1%; ">
         <label for="date">Fecha</label>
-        <input name="date" type="date" value="{{ old('date') }}" id="date"  />
+        <input name="date" type="datetime-local" value="{{ old('date') }}" id="date"  />
         @error('date')
         <small style="color: red;">{{ $message }}</small>
         @enderror

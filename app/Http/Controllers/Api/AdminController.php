@@ -266,7 +266,7 @@ class AdminController extends Controller
             'to'=>['required'],
             'indications'=>['max:255'],
             'number'=>['required','int','min:1','max:4'],
-            'date' => 'required|after:' . now(),
+            'date' => ['required','after_or_equal:' . now(),],
             'price'=>['required','regex:/^\d+(\.\d{1,2})?$/'],
         ];
     
@@ -282,7 +282,7 @@ class AdminController extends Controller
             'to.required'=> 'Por favor indique el punto de llegada del viaje',
             'indications.max'=> 'El valor maximo es de 255 caracteres',
             'date.required'=>'Ingrese una fecha para el viaje',
-            'date.after'=>'La fecha ingresada no es valida',
+            'date.after_or_equal'=>'La fecha ingresada u hora ingresada no es valida',
         ];
 
         
@@ -298,6 +298,7 @@ class AdminController extends Controller
         $viaje->price = request()->get('price');
         $viaje->passengers = request()->get('number');
         $viaje->fecha = request()->get('date');
+        
         $viaje->estado = 'disponible';
         
         $this->validate($request, $rules, $customMessages);

@@ -4,6 +4,7 @@
 @push('styles')
 <link href="/styles/login/styles.css" rel="stylesheet"/>
 @endpush
+<title>Iniciar Sesión</title>
 <!-- styles stack end -->
 
 <!-- content -->

@@ -5,6 +5,7 @@
 <link href="/styles/driver/styles.css" rel="stylesheet"/>
 <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 @endpush
+<title>Viajes en Curso</title>
 
 @section('content')
 @component('components.navbar')

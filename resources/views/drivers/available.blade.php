@@ -4,6 +4,7 @@
 <link href="/styles/globals.css" rel="stylesheet"/>
 <link href="/styles/driver/styles.css" rel="stylesheet"/>
 @endpush
+<title>Viajes Disponibles</title>
 
 @section('content')
 @component('components.navbar')

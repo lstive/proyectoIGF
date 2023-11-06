@@ -17,6 +17,9 @@
 <div>
   <a class="active" href="">Viajes en curso</a>
 </div>
+<div>
+  <a href="{{route('user.logoutDriver')}}">Cerrar Sesión</a>
+</div>
 @endcomponent
 
 <div class="container">

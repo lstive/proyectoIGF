@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 @extends('components.layout.layout')
 
 @push('styles')
@@ -29,3 +30,28 @@
 
 @push('scripts')
 @endpush
+=======
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Google Maps API Example</title>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD3z9M3X6r5rI8mu4d_1IdEqms72ntbt9c"></script>
+</head>
+<body>
+  <div id="map"></div>
+  <script>
+    // Crea un nuevo mapa
+    var map = new google.maps.Map(document.getElementById("map"));
+
+    // Centra el mapa en Manhattan
+    map.setCenter({lat: 40.712783, lng: -74.005942});
+
+    // Agrega un marcador al mapa
+    var marker = new google.maps.Marker({
+      position: {lat: 40.712783, lng: -74.005942},
+      map: map
+    });
+  </script>
+</body>
+</html>
+>>>>>>> Stashed changes
